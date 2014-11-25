@@ -50,6 +50,8 @@ namespace nsSdD
         void sort () throw ();
         void reverse () throw ();
     };
+
+    #include "CList.hxx"
 }
 
 #endif // CLIST_H

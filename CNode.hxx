@@ -15,10 +15,16 @@ TEMPLINL
 SDDELEM::CNode (const T & Data,
                 const Ptr_CNode & NextNode,
                 const Ptr_CNode &PrecNode) throw ()
-: m_Data (Data), m_NextNode(NextNode), m_PrecNode(PrecNode)   {}
+: m_Data (Data), m_NextNode(NextNode), m_PrecNode(PrecNode)
+{
+
+}
 
 TEMPLINL
-SDDELEM::~CNode  () throw () {}
+SDDELEM::~CNode  () throw ()
+{
+    delete m_NextNode;
+}
 
 TEMPLINL
 T SDDELEM::GetData () const throw ()
