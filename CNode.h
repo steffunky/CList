@@ -36,7 +36,7 @@ namespace nsSdD
     };
 
     #include "CNode.hxx"
-
+    #undef Ptr_CNode
 }
 
 #endif /* CNODE_H_ */
