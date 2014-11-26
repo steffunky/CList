@@ -9,9 +9,11 @@
 #define SDDLIST nsSdD::CList<T>
 
 #define Ptr_CNode shared_ptr<CNode<T>>
+typedef value_type T;
 
 TEMPLINL
 explicit SDDLIST::CList () throw ()
+    : m_Head (new CNode(0, m_Tail, nullptr)), m_Tail (new CNode (0, nullptr, m_Head))
 {
 
 }
@@ -19,23 +21,33 @@ explicit SDDLIST::CList () throw ()
 TEMPLINL
 explicit SDDLIST::CList (size_type n) throw ()
 {
-    for (unsigned i = 0; i < n; ++i)
+    for (unsigned i = n/2; i--;)
     {
-        m_Head = new CNode<T> (0, )
+        push_front(new CNode(0, m_Head->GetNextNode(), m_Head);
+    }
+    for (unsigned i = n/2; i < n; ++i)
+    {
+        push_back(new CNode(0, m_Tail, m_Tail->GetPrecNode()));
     }
 }
 
 TEMPLINL
 SDDLIST::CList (size_type n, const value_type & val) throw ()
 {
-
+    for (unsigned i = n/2; i--;)
+    {
+        push_front(new CNode(val, m_Head->GetNextNode(), m_Head);
+    }
+    for (unsigned i = n/2; i < n; ++i)
+    {
+        push_back(new CNode(val, m_Tail, m_Tail->GetPrecNode()));
+    }
 }
 
 TEMPLINL
 SDDLIST::CList (const CList & List) throw ()
 {
-    m_Head = List.GetHead();
-    m_Tail = List.GetTail();
+    this = List;
 }
 
 TEMPLINL
@@ -74,7 +86,7 @@ TEMPLINL
 size_type SDDLIST::size () const throw ()
 {
     size_type size = 0;
-    for (Ptr_CNode Ptr (m_Head->GetNextNode()); Ptr != m_Tail; Ptr = Ptr->GetNextNode())
+    for (Ptr_CNode Ptr (m_Head->GetNextNode()); Ptr != m_Tail->GetPrecNode(); Ptr = Ptr->GetNextNode())
     {
         ++size;
     }
@@ -85,6 +97,7 @@ size_type SDDLIST::size () const throw ()
 TEMPLINL
 CList& SDDLIST::operator= (const CList & List) throw ()
 {
+    this->clear();
     for (Ptr_CNode Ptr (List.GetHead()); Ptr != List.GetTail(); Ptr = Ptr->GetNextNode())
     {
         this->push_back(Ptr);
@@ -124,6 +137,8 @@ void SDDLIST::pop_back () throw()
 /* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
 void insert (unsigned Position, const Ptr_CNode & Node) throw ();
 void erase (unsigned Position, const Ptr_CNode & Node) throw ();
+void reverse () throw ();
+void unique () throw ();
 */
 
 void swap (const CList & List) throw ()
@@ -135,7 +150,7 @@ void swap (const CList & List) throw ()
 
 void clear () throw ()
 {
-
+    delete m_Head->GetNextNode();
 }
 
 void remove (const Ptr_CNode & Node) throw ()
@@ -144,21 +159,6 @@ void remove (const Ptr_CNode & Node) throw ()
     Node->GetPrecNode->SetNextNode(Node->GetNextNode());
     Node->SetNextNode(nullptr);
     Node->SetPrecNode(nullptr);
-}
-
-void unique () throw ()
-{
-
-}
-
-void sort () throw ()
-{
-
-}
-
-void reverse () throw ()
-{
-
 }
 
 #endif // CLIST_HXX
