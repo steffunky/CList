@@ -2,8 +2,8 @@
 #define __CLIST_HXX__
 
 #include "CList.h"
-#include <utility>
 
+#include <iostream>
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
@@ -18,41 +18,40 @@ SDDLIST::CList () noexcept
 
 TEMPLINL
 SDDLIST::CList (unsigned n) noexcept
+    : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-    for (unsigned i = n/2; i--;)
+    for (unsigned i = 0; i < n; ++i)
     {
-        push_front(new CNode<T>(0, m_Head->GetSuivant(), m_Head));
-    }
-    for (unsigned i = n/2; i < n; ++i)
-    {
-        push_back(new CNode<T>(0, m_Tail, m_Tail->GetPrecedent()));
+        //m_Head = new CNode<T>(0, m_Head, nullptr);
     }
 }
 
 TEMPLINL
 SDDLIST::CList (unsigned n, const T & val) noexcept
+    : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-    for (unsigned i = n/2; i--;)
+    /*
+    for (unsigned i = n/2; i > 0; --i)
     {
-        push_front(new CNode<T>(val, m_Head->GetSuivant(), m_Head));
+        push_front(val);
     }
     for (unsigned i = n/2; i < n; ++i)
     {
-        push_back(new CNode<T>(val, m_Tail, m_Tail->GetPrecedent()));
-    }
+        push_back(val);
+    } */
 }
 
 TEMPLINL
 SDDLIST::CList (const CList & List) noexcept
 {
-    this = List;
+    *this = List;
 }
 
 TEMPLINL
 SDDLIST::~CList (void) noexcept
 {
-    delete m_Head;
-    delete m_Tail;
+    /*delete m_Head;
+    delete m_Tail; */
 }
 
 TEMPLINL
@@ -64,7 +63,7 @@ typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
 TEMPLINL
 typename SDDLIST::Ptr_CNode SDDLIST::back () const noexcept
 {
-    m_Tail->GetPrecedent();
+    return m_Tail->GetPrecedent();
 }
 
 TEMPLINL
@@ -89,17 +88,17 @@ TEMPLINL
 CList<T>& SDDLIST::operator= (const CList & List) noexcept
 {
     clear();
-    for (Ptr_CNode Ptr (List.GetHead()); Ptr != List.GetTail(); Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr (List.front()->GetPrecedent()); Ptr != nullptr; Ptr = Ptr->GetSuivant())
     {
-        push_back(Ptr);
+        push_back(Ptr->GetData());
     }
+    return (*this);
 }
 
 TEMPLINL
-void SDDLIST::push_front (const Ptr_CNode & Node) noexcept
+void SDDLIST::push_front (const T & val) noexcept
 {
-    Node->SetSuivant (m_Head->GetSuivant());
-    Node->SetPrecedent (m_Head);
+    Ptr_CNode Node (new CNode<T>(val, m_Head->GetSuivant(), m_Head));
     m_Head->GetSuivant()->SetPrecedent(Node);
     m_Head->SetSuivant(Node);
 }
@@ -111,11 +110,10 @@ void SDDLIST::pop_front () noexcept
 }
 
 TEMPLINL
-void SDDLIST::push_back (const Ptr_CNode & Node) noexcept
+void SDDLIST::push_back (const T & val) noexcept
 {
-    Node->SetSuivant (m_Tail);
-    Node->SetPrecedent (m_Tail->GetPrecedent());
-    m_Tail->GetPrecedent->SetSuivant(Node);
+    Ptr_CNode Node (new CNode<T>(val, m_Tail, m_Tail->GetPrecedent()));
+    m_Tail->GetPrecedent()->SetSuivant(Node);
     m_Tail->SetPrecedent(Node);
 }
 
@@ -138,7 +136,6 @@ void SDDLIST::reverse () noexcept
 
 /* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
 max_size
-sort
 */
 
 TEMPLINL
@@ -156,17 +153,32 @@ void SDDLIST::clear () noexcept
     for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Next)
     {
         Next = Ptr->GetSuivant();
-        delete Ptr;
     }
 }
 
 TEMPLINL
-void SDDLIST::remove (const Ptr_CNode & Node) noexcept
+typename SDDLIST::Ptr_CNode SDDLIST::find (const T& val) noexcept
 {
-    Node->GetSuivant->SetPrecedent(Node->GetPrecedent());
-    Node->GetPrecedent->SetSuivant(Node->GetSuivant());
-    Node->SetSuivant(nullptr);
-    Node->SetPrecedent(nullptr);
+    for (Ptr_CNode ptr (m_Head->GetSuivant()); ptr != m_Tail; ptr = ptr->GetSuivant())
+    {
+        if (ptr->GetData() == val)
+        {
+            return ptr;
+        }
+    }
+}
+
+TEMPLINL
+void SDDLIST::remove (const T & val) noexcept
+{   
+    Ptr_CNode Node = find(val);
+    if (Node != nullptr)
+    {
+        Node->GetSuivant()->SetPrecedent(Node->GetPrecedent());
+        Node->GetPrecedent()->SetSuivant(Node->GetSuivant());
+        Node->SetSuivant(nullptr);
+        Node->SetPrecedent(nullptr);
+    }
 }
 
 TEMPLINL

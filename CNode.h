@@ -14,7 +14,7 @@ namespace nsSdD
 {
     template <typename T>
 
-    class CNode : public T
+    class CNode
     {
       public :
         typedef std::shared_ptr<CNode<T>> Ptr_CNode;

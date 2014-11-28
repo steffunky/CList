@@ -1,14 +1,14 @@
 #include <iostream>			// cout
-#include <ctime>            //srand(), rand()
-
 #include "CNode.h"			// CNode
 #include "CDuree.h"			// CDuree
+#include <ctime>            //srand(), rand()
 #include "IziAssert.h"      // IZI_ASSERT()
-#include "CList.h"          // CList
 
-using namespace std;
-using namespace nsSdD;
-using namespace nsUtil;
+template <typename T>
+#define CNODET nsSdD::CNode<T>
+#define CDUREE nsUtil::CDuree
+typedef  nsSdD::CList CLIST;
+typedef CNODET::CNode<CDUREE::CDuree> CNODEDUREE;
 
 namespace
 {
@@ -19,33 +19,27 @@ namespace
 
     void TestCDuree()
     {
-
-        cout << "lol" << endl;
-        CList<int> listeDuree (10);
-
-        for (unsigned i = 0; i< 10; ++i)
+        CLIST::CList listeDuree = CLIST::CList(10);
+        for (unsigned i = 0; i< 10; ++i,)
         {
-            //listeDuree.push_back(4);
+            listeDuree.push_back(new CNODE::CNode(new CDUREE::CDuree(Rand(1,300))));
         }
 
-        CList<int> listeDuree2(listeDuree);   //copie de listeDuree
+        CLIST::CList listeDuree2(listeDuree);   //copie de listeDuree
 
-        cout << "lol" << endl;
 
        cout << "On créer 1 CListe de" << "\033[34mCDUREE " << "et une copie de ce" << "\033[34mCList" << endl << endl << endl;
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien égaux" << endl;
-/*
        IZI_ASSERT(listeDuree == listeDuree2);
-
        // Test push_front() et pop_front()
        cout << "On ajoute un" << "\033[34mCDUREE " << "au début de la première "<< "\033[34mCList" << endl;
        IZI_ASSERT(listeDuree.push_front(new CDUREE::CDuree(Rand(1,300))));
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien différents" << endl;
-       IZI_ASSERT(!(listeDuree == listeDuree2));
+       IZI_ASSERT( !(listeDuree == listeDuree2));
        cout << "On supprime le" << "\033[34mCDUREE " << "au début de la première " <<"\033[34mCList" << endl;
-       IZI_ASSERT(listeDuree.pop_front());
+       IZI_ASSERT(listeDuree.pop_front())
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien égaux" << endl;
-       IZI_ASSERT(!(listeDuree == listeDuree2));
+       IZI_ASSERT( !(listeDuree == listeDuree2));
        // Test push_back() et pop_back()
        cout << "On ajoute un" << "\033[34mCDUREE " << "à la fin de la première "<< "\033[34mCList" << endl;
        IZI_ASSERT(listeDuree.push_back(new CDUREE::CDuree(Rand(1,300))));
@@ -60,7 +54,7 @@ namespace
        //   A DECOMMENTER POUR LA V2
        //
        //
-
+       /*
        cout << "On ajoute un" << "\033[34mCDUREE " << "à la 5e position de "<< "\033[34mCList" << endl;
        IZI_ASSERT(listeDuree.insert(5,new CDuree()));
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien différents" << endl;
@@ -68,13 +62,14 @@ namespace
        cout << "On supprime le" << "\033[34mCDUREE " << "à la 5e position de "<< "\033[34mCList" << endl;
        IZI_ASSERT(listeDuree.erase(5));
        */
-
+       
+       
     }
+
 }
 int main()
 {
-    //srand(time(NULL));
-    TestCDuree();
+    srand(time(NULL));
     return 0;
 }
 

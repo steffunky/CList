@@ -20,7 +20,7 @@ SDDELEM::CNode (const T & Data,
 TEMPLINL
 SDDELEM::~CNode  () noexcept
 {
-    delete m_Suivant;
+
 }
 
 TEMPLINL

@@ -2,7 +2,6 @@
 #define __CLIST_H__
 
 #include "CNode.h"
-#include <memory>
 
 namespace nsSdD
 {
@@ -26,16 +25,16 @@ namespace nsSdD
         unsigned max_size() const;
 
         CList& operator= (const CList & List) noexcept;
-        void push_front (const Ptr_CNode & Node) noexcept;
+        void push_front (const T & val) noexcept;
         void pop_front () noexcept;
 
-        void push_back (const Ptr_CNode & Node) noexcept;
+        void push_back (const T & val) noexcept;
         void pop_back () throw();
 
         void swap (CList<T> & List) noexcept;
         void clear () noexcept;
 
-        void remove (const Ptr_CNode & Node) noexcept;
+        void remove (const T & Node) noexcept;
         void unique () noexcept;
 
         void sort () noexcept;
@@ -49,6 +48,8 @@ namespace nsSdD
       private :
         Ptr_CNode m_Head;
         Ptr_CNode m_Tail;
+
+        Ptr_CNode find (const T& val) noexcept;
 
     };
 

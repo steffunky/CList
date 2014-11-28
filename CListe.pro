@@ -20,5 +20,6 @@ HEADERS += \
     CEditable.hxx \
     CDuree.hxx \
     CException.h \
-    CException.hxx
+    CException.hxx \
+    IziAssert.h
 
