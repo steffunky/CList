@@ -30,13 +30,13 @@ namespace nsUtil
 
       public :
         CException (const std::string & Libelle = std::string(),
-                    const unsigned      CodErr  = KNoExc)     throw ();
-        virtual ~CException (void)                            throw ();
+                    const unsigned      CodErr  = KNoExc)     noexcept;
+        virtual ~CException (void)                            noexcept;
 
-        const std::string & GetLibelle (void) const           throw ();
-        unsigned            GetCodErr  (void) const           throw ();
+        const std::string & GetLibelle (void) const           noexcept;
+        unsigned            GetCodErr  (void) const           noexcept;
 
-        virtual const char* what() const                      throw ();
+        virtual const char* what() const                      noexcept;
 
       protected :
         virtual std::ostream & _Edit (std::ostream & os) const;

@@ -20,17 +20,17 @@ namespace nsSdD
         typedef std::shared_ptr<CNode<T>> Ptr_CNode;
         CNode (const T         & Data     = T(),
                const Ptr_CNode & Suivant = nullptr,
-               const Ptr_CNode & Precedent = nullptr) throw ();
+               const Ptr_CNode & Precedent = nullptr) noexcept;
 
-        ~CNode () throw ();
+        ~CNode () noexcept;
 
-        T GetData () const throw ();
-        Ptr_CNode GetSuivant () const throw ();
-        Ptr_CNode GetPrecedent () const throw ();
+        T GetData () const noexcept;
+        Ptr_CNode GetSuivant () const noexcept;
+        Ptr_CNode GetPrecedent () const noexcept;
 
-        void SetData (const T & Data) throw ();
-        void SetSuivant (const Ptr_CNode & Suivant) throw ();
-        void SetPrecedent (const Ptr_CNode & Precedent) throw ();
+        void SetData (const T & Data) noexcept;
+        void SetSuivant (const Ptr_CNode & Suivant) noexcept;
+        void SetPrecedent (const Ptr_CNode & Precedent) noexcept;
 
       private :
         T m_Data;

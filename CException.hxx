@@ -23,19 +23,19 @@
 inline
 CEXC::CException (const std::string & Libelle /* = std::string () */,
                   const unsigned      CodErr  /* = KNoExc         */)
-                                                               throw ()
+                                                               noexcept
     : m_Libelle (Libelle), m_CodErr (CodErr) {}
 
-inline const std::string & CEXC::GetLibelle (void) const throw ()
+inline const std::string & CEXC::GetLibelle (void) const noexcept
 {
     return m_Libelle;
 
 } // GetLibelle()
 
 inline
-unsigned CEXC::GetCodErr (void) const throw () { return m_CodErr;  }
+unsigned CEXC::GetCodErr (void) const noexcept { return m_CodErr;  }
 
-inline CEXC::~CException (void) throw () {}
+inline CEXC::~CException (void) noexcept {}
 
 inline
 const char* CEXC::what() const throw()  { return m_Libelle.c_str(); }

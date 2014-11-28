@@ -11,50 +11,50 @@
 TEMPLINL
 SDDELEM::CNode (const T & Data,
                 const Ptr_CNode & Suivant,
-                const Ptr_CNode & Precedent) throw ()
+                const Ptr_CNode & Precedent) noexcept
 : m_Data (Data), m_Suivant(Suivant), m_Precedent(Precedent)
 {
 
 }
 
 TEMPLINL
-SDDELEM::~CNode  () throw ()
+SDDELEM::~CNode  () noexcept
 {
     delete m_Suivant;
 }
 
 TEMPLINL
-T SDDELEM::GetData () const throw ()
+T SDDELEM::GetData () const noexcept
 {
     return m_Data;
 }
 
 TEMPLINL
-typename SDDELEM::Ptr_CNode SDDELEM::GetSuivant () const throw ()
+typename SDDELEM::Ptr_CNode SDDELEM::GetSuivant () const noexcept
 {
     return m_Suivant;
 }
 
 TEMPLINL
-typename SDDELEM::Ptr_CNode SDDELEM::GetPrecedent () const throw ()
+typename SDDELEM::Ptr_CNode SDDELEM::GetPrecedent () const noexcept
 {
     return m_Precedent;
 }
 
 TEMPLINL
-void SDDELEM::SetData (const T & Data) throw ()
+void SDDELEM::SetData (const T & Data) noexcept
 {
     m_Data = Data;
 }
 
 TEMPLINL
-void SDDELEM::SetSuivant (const Ptr_CNode & Suivant) throw ()
+void SDDELEM::SetSuivant (const Ptr_CNode & Suivant) noexcept
 {
     m_Suivant = Suivant;
 }
 
 TEMPLINL
-void SDDELEM::SetPrecedent (const Ptr_CNode & Precedent) throw ()
+void SDDELEM::SetPrecedent (const Ptr_CNode & Precedent) noexcept
 {
     m_Precedent = Precedent;
 }

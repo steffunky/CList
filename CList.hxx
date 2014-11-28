@@ -10,14 +10,14 @@
 #define SDDLIST nsSdD::CList<T>
 
 TEMPLINL
-SDDLIST::CList () throw ()
+SDDLIST::CList () noexcept
     : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
 
 }
 
 TEMPLINL
-SDDLIST::CList (unsigned n) throw ()
+SDDLIST::CList (unsigned n) noexcept
 {
     for (unsigned i = n/2; i--;)
     {
@@ -30,7 +30,7 @@ SDDLIST::CList (unsigned n) throw ()
 }
 
 TEMPLINL
-SDDLIST::CList (unsigned n, const T & val) throw ()
+SDDLIST::CList (unsigned n, const T & val) noexcept
 {
     for (unsigned i = n/2; i--;)
     {
@@ -43,38 +43,38 @@ SDDLIST::CList (unsigned n, const T & val) throw ()
 }
 
 TEMPLINL
-SDDLIST::CList (const CList & List) throw ()
+SDDLIST::CList (const CList & List) noexcept
 {
     this = List;
 }
 
 TEMPLINL
-SDDLIST::~CList (void) throw ()
+SDDLIST::~CList (void) noexcept
 {
     delete m_Head;
     delete m_Tail;
 }
 
 TEMPLINL
-typename SDDLIST::Ptr_CNode SDDLIST::front() const throw ()
+typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
 {
     return m_Head->GetSuivant();
 }
 
 TEMPLINL
-typename SDDLIST::Ptr_CNode SDDLIST::back () const throw ()
+typename SDDLIST::Ptr_CNode SDDLIST::back () const noexcept
 {
     m_Tail->GetPrecedent();
 }
 
 TEMPLINL
-bool SDDLIST::empty () const throw ()
+bool SDDLIST::empty () const noexcept
 {
     return m_Head->GetSuivant() == nullptr;
 }
 
 TEMPLINL
-unsigned SDDLIST::size () const throw ()
+unsigned SDDLIST::size () const noexcept
 {
     unsigned size = 0;
     for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail->GetPrecedent(); Ptr = Ptr->GetSuivant())
@@ -86,7 +86,7 @@ unsigned SDDLIST::size () const throw ()
 }
 
 TEMPLINL
-CList<T>& SDDLIST::operator= (const CList & List) throw ()
+CList<T>& SDDLIST::operator= (const CList & List) noexcept
 {
     clear();
     for (Ptr_CNode Ptr (List.GetHead()); Ptr != List.GetTail(); Ptr = Ptr->GetSuivant())
@@ -96,7 +96,7 @@ CList<T>& SDDLIST::operator= (const CList & List) throw ()
 }
 
 TEMPLINL
-void SDDLIST::push_front (const Ptr_CNode & Node) throw ()
+void SDDLIST::push_front (const Ptr_CNode & Node) noexcept
 {
     Node->SetSuivant (m_Head->GetSuivant());
     Node->SetPrecedent (m_Head);
@@ -105,13 +105,13 @@ void SDDLIST::push_front (const Ptr_CNode & Node) throw ()
 }
 
 TEMPLINL
-void SDDLIST::pop_front () throw ()
+void SDDLIST::pop_front () noexcept
 {
     remove(m_Head->GetSuivant());
 }
 
 TEMPLINL
-void SDDLIST::push_back (const Ptr_CNode & Node) throw ()
+void SDDLIST::push_back (const Ptr_CNode & Node) noexcept
 {
     Node->SetSuivant (m_Tail);
     Node->SetPrecedent (m_Tail->GetPrecedent());
@@ -126,7 +126,7 @@ void SDDLIST::pop_back () throw()
 }
 
 TEMPLINL
-void SDDLIST::reverse () throw ()
+void SDDLIST::reverse () noexcept
 {
     Ptr_CNode Start = m_Head->GetSuivant();
     Ptr_CNode End = m_Tail->GetPrecedent();
@@ -136,22 +136,13 @@ void SDDLIST::reverse () throw ()
     }
 }
 
-
-
 /* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
-void unique () throw ();
-resize
-merge
-assign
 max_size
-front
-back
-assign
-remove
 sort
 */
+
 TEMPLINL
-void SDDLIST::swap (CList<T> & List) throw ()
+void SDDLIST::swap (CList<T> & List) noexcept
 {
     CList ListInter (this);
     this = List;
@@ -159,7 +150,7 @@ void SDDLIST::swap (CList<T> & List) throw ()
 }
 
 TEMPLINL
-void SDDLIST::clear () throw ()
+void SDDLIST::clear () noexcept
 {
     Ptr_CNode Next;
     for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Next)
@@ -170,12 +161,86 @@ void SDDLIST::clear () throw ()
 }
 
 TEMPLINL
-void SDDLIST::remove (const Ptr_CNode & Node) throw ()
+void SDDLIST::remove (const Ptr_CNode & Node) noexcept
 {
     Node->GetSuivant->SetPrecedent(Node->GetPrecedent());
     Node->GetPrecedent->SetSuivant(Node->GetSuivant());
     Node->SetSuivant(nullptr);
     Node->SetPrecedent(nullptr);
+}
+
+TEMPLINL
+void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
+{
+    if(n < size())
+    {
+        for(; n < size(); ++n)
+        {
+            pop_back();
+
+        }
+    }
+    else if (n > size())
+    {
+        for(; n > size(); --n)
+        {
+            push_back(new CNode<T>(val));
+        }
+    }
+}
+
+TEMPLINL
+void SDDLIST::merge (CList & x) noexcept
+{
+    for(Ptr_CNode Ptr = x.front(); Ptr != x.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
+    {
+        push_back(Ptr);
+    }
+}
+
+TEMPLINL
+void SDDLIST::assign (unsigned n, const T& val) noexcept
+{
+    resize(n);
+    for(Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
+    {
+        Ptr->SetData(val);
+    }
+}
+
+TEMPLINL
+void SDDLIST::unique() noexcept
+{
+    Ptr_CNode Ptr = front();
+    for(; Ptr != back();)
+    {
+        if( Ptr->GetData() == Ptr->GetSuivant()->GetData() )
+        {
+            remove(Ptr->GetSuivant());
+        }
+        else
+        {
+            Ptr = Ptr->GetSuivant();
+        }
+    }
+}
+
+TEMPLINL
+void SDDLIST::sort() noexcept
+{
+    for(Ptr_CNode End = back();End != front(); End = End->GetPrecedent())
+    {
+        bool noSwap = true;
+        for(Ptr_CNode Ptr = front(); Ptr != End; Ptr = Ptr->GetSuivant())
+        {
+            if(Ptr->GetData() > Ptr->GetSuivant()->GetData())
+            {
+                swap (Ptr->GetData(), Ptr->GetSuivant()->GetData());
+                noSwap = false;
+            }
+        }
+        if(noSwap) break;
+    }
 }
 
 #endif // CLIST_HXX
