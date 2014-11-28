@@ -6,7 +6,7 @@ CONFIG -= qt
 SOURCES += main.cpp \
     CDuree.cxx \
     CException.cxx
-CONFIG += -std=c++11
+CONFIG += c++11
 CONFIG += -Wall
 
 HEADERS += \

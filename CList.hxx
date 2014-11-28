@@ -4,44 +4,41 @@
 #include "CList.h"
 #include <utility>
 
-#define TEMPL template <typename T>
+#define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
 #define SDDLIST nsSdD::CList<T>
 
-#define Ptr_CNode shared_ptr<CNode<T>>
-typedef value_type T;
-
 TEMPLINL
-explicit SDDLIST::CList () throw ()
-    : m_Head (new CNode(0, m_Tail, nullptr)), m_Tail (new CNode (0, nullptr, m_Head))
+SDDLIST::CList () throw ()
+    : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
 
 }
 
 TEMPLINL
-explicit SDDLIST::CList (size_type n) throw ()
+SDDLIST::CList (unsigned n) throw ()
 {
     for (unsigned i = n/2; i--;)
     {
-        push_front(new CNode(0, m_Head->GetSuivant(), m_Head);
+        push_front(new CNode<T>(0, m_Head->GetSuivant(), m_Head));
     }
     for (unsigned i = n/2; i < n; ++i)
     {
-        push_back(new CNode(0, m_Tail, m_Tail->GetPrecedent()));
+        push_back(new CNode<T>(0, m_Tail, m_Tail->GetPrecedent()));
     }
 }
 
 TEMPLINL
-SDDLIST::CList (size_type n, const value_type & val) throw ()
+SDDLIST::CList (unsigned n, const T & val) throw ()
 {
     for (unsigned i = n/2; i--;)
     {
-        push_front(new CNode(val, m_Head->GetSuivant(), m_Head);
+        push_front(new CNode<T>(val, m_Head->GetSuivant(), m_Head));
     }
     for (unsigned i = n/2; i < n; ++i)
     {
-        push_back(new CNode(val, m_Tail, m_Tail->GetPrecedent()));
+        push_back(new CNode<T>(val, m_Tail, m_Tail->GetPrecedent()));
     }
 }
 
@@ -59,13 +56,13 @@ SDDLIST::~CList (void) throw ()
 }
 
 TEMPLINL
-Ptr_CNode SDDLIST::front() const throw ()
+typename SDDLIST::Ptr_CNode SDDLIST::front() const throw ()
 {
     return m_Head->GetSuivant();
 }
 
 TEMPLINL
-Ptr_CNode SDDLIST::back () const throw ()
+typename SDDLIST::Ptr_CNode SDDLIST::back () const throw ()
 {
     m_Tail->GetPrecedent();
 }
@@ -77,9 +74,9 @@ bool SDDLIST::empty () const throw ()
 }
 
 TEMPLINL
-size_type SDDLIST::size () const throw ()
+unsigned SDDLIST::size () const throw ()
 {
-    size_type size = 0;
+    unsigned size = 0;
     for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail->GetPrecedent(); Ptr = Ptr->GetSuivant())
     {
         ++size;
@@ -89,7 +86,7 @@ size_type SDDLIST::size () const throw ()
 }
 
 TEMPLINL
-CList& SDDLIST::operator= (const CList & List) throw ()
+CList<T>& SDDLIST::operator= (const CList & List) throw ()
 {
     clear();
     for (Ptr_CNode Ptr (List.GetHead()); Ptr != List.GetTail(); Ptr = Ptr->GetSuivant())
@@ -153,15 +150,16 @@ assign
 remove
 sort
 */
-
-void swap (const CList & List) throw ()
+TEMPLINL
+void SDDLIST::swap (CList<T> & List) throw ()
 {
     CList ListInter (this);
     this = List;
     List = ListInter;
 }
 
-void clear () throw ()
+TEMPLINL
+void SDDLIST::clear () throw ()
 {
     Ptr_CNode Next;
     for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Next)
@@ -171,7 +169,8 @@ void clear () throw ()
     }
 }
 
-void remove (const Ptr_CNode & Node) throw ()
+TEMPLINL
+void SDDLIST::remove (const Ptr_CNode & Node) throw ()
 {
     Node->GetSuivant->SetPrecedent(Node->GetPrecedent());
     Node->GetPrecedent->SetSuivant(Node->GetSuivant());

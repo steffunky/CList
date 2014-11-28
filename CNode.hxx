@@ -8,9 +8,6 @@
 
 #define SDDELEM nsSdD::CNode<T>
 
-#define Ptr_CNode shared_ptr<CNode<T>>
-
-
 TEMPLINL
 SDDELEM::CNode (const T & Data,
                 const Ptr_CNode & Suivant,
@@ -33,13 +30,13 @@ T SDDELEM::GetData () const throw ()
 }
 
 TEMPLINL
-Ptr_CNode SDDELEM::GetSuivant () const throw ()
+typename SDDELEM::Ptr_CNode SDDELEM::GetSuivant () const throw ()
 {
     return m_Suivant;
 }
 
 TEMPLINL
-Ptr_CNode SDDELEM::GetPrecedent () const throw ()
+typename SDDELEM::Ptr_CNode SDDELEM::GetPrecedent () const throw ()
 {
     return m_Precedent;
 }
