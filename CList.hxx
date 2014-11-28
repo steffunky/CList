@@ -54,6 +54,7 @@ TEMPLINL
 SDDLIST::~CList (void) throw ()
 {
     delete m_Head;
+    delete m_Tail;
 }
 
 TEMPLINL
@@ -134,6 +135,7 @@ void SDDLIST::pop_back () throw()
 {
     this->remove(m_Tail->GetPrecNode());
 }
+
 /* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
 void insert (unsigned Position, const Ptr_CNode & Node) throw ();
 void erase (unsigned Position, const Ptr_CNode & Node) throw ();
@@ -150,7 +152,12 @@ void swap (const CList & List) throw ()
 
 void clear () throw ()
 {
-    delete m_Head->GetNextNode();
+    Ptr_CNode Next;
+    for (Ptr_CNode Ptr (m_Head->GetNextNode()); Ptr != m_Tail; Ptr = Next)
+    {
+        Next = Ptr->GetSuivant();
+        delete Ptr;
+    }
 }
 
 void remove (const Ptr_CNode & Node) throw ()
