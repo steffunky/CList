@@ -22,11 +22,8 @@ namespace nsSdD
         CList (const CList & x) throw ();
         ~CList (void) throw ();
 
-        Ptr_CNode GetHead () const throw ();
-        Ptr_CNode GetTail () const throw ();
-
-        void SetHead (const Ptr_CNode & Head) throw ();
-        void SetTail (const Ptr_CNode & Tail) throw ();
+        Ptr_CNode front () const throw ();
+        Ptr_CNode back () const throw ();
 
         bool Empty () const throw ();
         size_type size () const throw ();

@@ -15,7 +15,7 @@ TEMPLINL
 SDDELEM::CNode (const T & Data,
                 const Ptr_CNode & Suivant,
                 const Ptr_CNode & Precedent) throw ()
-: m_Data (Data), m_NextNode(NextNode), m_PrecNode(PrecNode)
+: m_Data (Data), m_Suivant(Suivant), m_Precedent(Precedent)
 {
 
 }
@@ -23,7 +23,7 @@ SDDELEM::CNode (const T & Data,
 TEMPLINL
 SDDELEM::~CNode  () throw ()
 {
-    delete m_NextNode;
+    delete m_Suivant;
 }
 
 TEMPLINL
@@ -33,15 +33,15 @@ T SDDELEM::GetData () const throw ()
 }
 
 TEMPLINL
-Ptr_CNode SDDELEM::GetNextNode () const throw ()
+Ptr_CNode SDDELEM::GetSuivant () const throw ()
 {
-    return m_NextNode;
+    return m_Suivant;
 }
 
 TEMPLINL
-Ptr_CNode SDDELEM::GetPrecNode () const throw ()
+Ptr_CNode SDDELEM::GetPrecedent () const throw ()
 {
-    return m_PrecNode;
+    return m_Precedent;
 }
 
 TEMPLINL
@@ -51,15 +51,15 @@ void SDDELEM::SetData (const T & Data) throw ()
 }
 
 TEMPLINL
-void SDDELEM::SetNextNode (const Ptr_CNode & NextNode) throw ()
+void SDDELEM::SetSuivant (const Ptr_CNode & Suivant) throw ()
 {
-    m_NextNode = NextNode;
+    m_Suivant = Suivant;
 }
 
 TEMPLINL
-void SDDELEM::SetPrecNode (const Ptr_CNode & PrecNode) throw ()
+void SDDELEM::SetPrecedent (const Ptr_CNode & Precedent) throw ()
 {
-    m_PrecNode = PrecNode;
+    m_Precedent = Precedent;
 }
 
 #endif // CNODE_HXX

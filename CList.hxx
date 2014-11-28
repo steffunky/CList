@@ -23,11 +23,11 @@ explicit SDDLIST::CList (size_type n) throw ()
 {
     for (unsigned i = n/2; i--;)
     {
-        push_front(new CNode(0, m_Head->GetNextNode(), m_Head);
+        push_front(new CNode(0, m_Head->GetSuivant(), m_Head);
     }
     for (unsigned i = n/2; i < n; ++i)
     {
-        push_back(new CNode(0, m_Tail, m_Tail->GetPrecNode()));
+        push_back(new CNode(0, m_Tail, m_Tail->GetPrecedent()));
     }
 }
 
@@ -36,11 +36,11 @@ SDDLIST::CList (size_type n, const value_type & val) throw ()
 {
     for (unsigned i = n/2; i--;)
     {
-        push_front(new CNode(val, m_Head->GetNextNode(), m_Head);
+        push_front(new CNode(val, m_Head->GetSuivant(), m_Head);
     }
     for (unsigned i = n/2; i < n; ++i)
     {
-        push_back(new CNode(val, m_Tail, m_Tail->GetPrecNode()));
+        push_back(new CNode(val, m_Tail, m_Tail->GetPrecedent()));
     }
 }
 
@@ -58,36 +58,28 @@ SDDLIST::~CList (void) throw ()
 }
 
 TEMPLINL
-Ptr_CNode SDDLIST::GetHead() const throw ()
+Ptr_CNode SDDLIST::front() const throw ()
 {
-    return m_Head;
-}
-Ptr_CNode GetTail () const throw ();
-
-TEMPLINL
-void SDDLIST::SetHead (const Ptr_CNode & Head) throw ()
-{
-    m_Head = Head;
-}
-
-
-TEMPLINL
-void SDDLIST::SetTail (const Ptr_CNode & Tail) throw ()
-{
-    m_Tail = Tail;
+    return m_Head->GetSuivant();
 }
 
 TEMPLINL
-bool SDDLIST::Empty () const throw ()
+Ptr_CNode SDDLIST::back () const throw ()
 {
-    return m_Head->GetNextNode() == nullptr;
+    m_Tail->GetPrecedent();
+}
+
+TEMPLINL
+bool SDDLIST::empty () const throw ()
+{
+    return m_Head->GetSuivant() == nullptr;
 }
 
 TEMPLINL
 size_type SDDLIST::size () const throw ()
 {
     size_type size = 0;
-    for (Ptr_CNode Ptr (m_Head->GetNextNode()); Ptr != m_Tail->GetPrecNode(); Ptr = Ptr->GetNextNode())
+    for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail->GetPrecedent(); Ptr = Ptr->GetSuivant())
     {
         ++size;
     }
@@ -98,49 +90,61 @@ size_type SDDLIST::size () const throw ()
 TEMPLINL
 CList& SDDLIST::operator= (const CList & List) throw ()
 {
-    this->clear();
-    for (Ptr_CNode Ptr (List.GetHead()); Ptr != List.GetTail(); Ptr = Ptr->GetNextNode())
+    clear();
+    for (Ptr_CNode Ptr (List.GetHead()); Ptr != List.GetTail(); Ptr = Ptr->GetSuivant())
     {
-        this->push_back(Ptr);
+        push_back(Ptr);
     }
 }
 
 TEMPLINL
 void SDDLIST::push_front (const Ptr_CNode & Node) throw ()
 {
-    Node->SetNextNode (m_Head->GetNextNode());
-    Node->SetPrecNode (m_Head);
-    m_Head->GetNextNode()->SetPrecNode(Node);
-    m_Head->SetNextNode(Node);
+    Node->SetSuivant (m_Head->GetSuivant());
+    Node->SetPrecedent (m_Head);
+    m_Head->GetSuivant()->SetPrecedent(Node);
+    m_Head->SetSuivant(Node);
 }
 
 TEMPLINL
 void SDDLIST::pop_front () throw ()
 {
-    this->remove(m_Head->GetNextNode());
-
+    remove(m_Head->GetSuivant());
 }
 
 TEMPLINL
 void SDDLIST::push_back (const Ptr_CNode & Node) throw ()
 {
-    Node->SetNextNode (m_Tail);
-    Node->SetPrecNode (m_Tail->GetPrecNode());
-    m_Tail->GetPrecNode->SetNextNode(Node);
-    m_Tail->SetPrecNode(Node);
+    Node->SetSuivant (m_Tail);
+    Node->SetPrecedent (m_Tail->GetPrecedent());
+    m_Tail->GetPrecedent->SetSuivant(Node);
+    m_Tail->SetPrecedent(Node);
 }
 
 TEMPLINL
 void SDDLIST::pop_back () throw()
 {
-    this->remove(m_Tail->GetPrecNode());
+    remove(m_Tail->GetPrecedent());
+}
+
+TEMPLINL
+void SDDLIST::reverse () throw ()
+{
+
 }
 
 /* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
-void insert (unsigned Position, const Ptr_CNode & Node) throw ();
-void erase (unsigned Position, const Ptr_CNode & Node) throw ();
 void reverse () throw ();
 void unique () throw ();
+resize
+merge
+assign
+max_size
+front
+back
+assign
+remove
+sort
 */
 
 void swap (const CList & List) throw ()
@@ -153,7 +157,7 @@ void swap (const CList & List) throw ()
 void clear () throw ()
 {
     Ptr_CNode Next;
-    for (Ptr_CNode Ptr (m_Head->GetNextNode()); Ptr != m_Tail; Ptr = Next)
+    for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Next)
     {
         Next = Ptr->GetSuivant();
         delete Ptr;
@@ -162,10 +166,10 @@ void clear () throw ()
 
 void remove (const Ptr_CNode & Node) throw ()
 {
-    Node->GetNextNode->SetPrecNode(Node->GetPrecNode());
-    Node->GetPrecNode->SetNextNode(Node->GetNextNode());
-    Node->SetNextNode(nullptr);
-    Node->SetPrecNode(nullptr);
+    Node->GetSuivant->SetPrecedent(Node->GetPrecedent());
+    Node->GetPrecedent->SetSuivant(Node->GetSuivant());
+    Node->SetSuivant(nullptr);
+    Node->SetPrecedent(nullptr);
 }
 
 #endif // CLIST_HXX
