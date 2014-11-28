@@ -5,7 +5,7 @@
 
 namespace nsSdD
 {
-    template <class T>
+    template <typename T>
     #define Ptr_CNode shared_ptr<CNode<T>>
 
     class CList : public T

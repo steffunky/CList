@@ -2,8 +2,9 @@
 #define __CLIST_HXX__
 
 #include "CList.h"
+#include <utility>
 
-#define TEMPL template <class T>
+#define TEMPL template <typename T>
 #define TEMPLINL TEMPL inline
 
 #define SDDLIST nsSdD::CList<T>
@@ -130,11 +131,17 @@ void SDDLIST::pop_back () throw()
 TEMPLINL
 void SDDLIST::reverse () throw ()
 {
-
+    Ptr_CNode Start = m_Head->GetSuivant();
+    Ptr_CNode End = m_Tail->GetPrecedent();
+    for (; End->GetSuivant() == Start; Start = Start->GetSuivant(), End = End->GetPrecedent())
+    {
+        std::swap(Start, End);
+    }
 }
 
+
+
 /* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
-void reverse () throw ();
 void unique () throw ();
 resize
 merge

@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += main.cpp \
     CDuree.cxx \
     CException.cxx
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG += -std=c++11
+CONFIG += -Wall
 
 HEADERS += \
     CNode.h \
