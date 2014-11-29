@@ -21,9 +21,8 @@ namespace
     {
 
         cout << "lol" << endl;
-        CList<int> listeDuree(1);
-        listeDuree.push_back(2);
-        //CList<int> listeDuree2;
+        CList<int> listeDuree(3, -4);
+        listeDuree.push_front(2);
         //listeDuree.push_front(2);
   //      listeDuree2.push_back(4);
 //        listeDuree = listeDuree2;

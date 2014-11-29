@@ -11,36 +11,30 @@
 
 TEMPLINL
 SDDLIST::CList () noexcept
-    : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (new CNode<T>(0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-
+    m_Head->SetSuivant(m_Tail);
 }
 
 TEMPLINL
 SDDLIST::CList (unsigned n) noexcept
-    : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (new CNode<T>(0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-    for (unsigned i = n/2; i > 0; --i)
+    m_Head->SetSuivant(m_Tail);
+    for (unsigned i = 0; i < n; ++i)
     {
         push_front(0);
-    }
-    for (unsigned i = n/2; i < n; ++i)
-    {
-        push_back(0);
     }
 }
 
 TEMPLINL
 SDDLIST::CList (unsigned n, const T & val) noexcept
-    : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (new CNode<T>(0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-    for (unsigned i = n/2; i > 0; --i)
+    m_Head->SetSuivant(m_Tail);
+    for (unsigned i = 0; i < n; ++i)
     {
         push_front(val);
-    }
-    for (unsigned i = n/2; i < n; ++i)
-    {
-        push_back(val);
     }
 }
 
@@ -263,7 +257,7 @@ TEMPLINL
 void SDDLIST::afficher() noexcept
 {
     std::cout << "Affichage de la liste" << std::endl;
-    for (Ptr_CNode Ptr(m_Head); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr(m_Head); Ptr != nullptr; Ptr = Ptr->GetSuivant())
     {
         std::cout << Ptr->GetData() << std::endl;
     }
