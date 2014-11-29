@@ -20,9 +20,13 @@ TEMPLINL
 SDDLIST::CList (unsigned n) noexcept
     : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-    for (unsigned i = 0; i < n; ++i)
+    for (unsigned i = n/2; i > 0; --i)
     {
-        //m_Head = new CNode<T>(0, m_Head, nullptr);
+        push_front(0);
+    }
+    for (unsigned i = n/2; i < n; ++i)
+    {
+        push_back(0);
     }
 }
 
@@ -30,7 +34,6 @@ TEMPLINL
 SDDLIST::CList (unsigned n, const T & val) noexcept
     : m_Head (new CNode<T>(0, m_Tail, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
 {
-    /*
     for (unsigned i = n/2; i > 0; --i)
     {
         push_front(val);
@@ -38,7 +41,7 @@ SDDLIST::CList (unsigned n, const T & val) noexcept
     for (unsigned i = n/2; i < n; ++i)
     {
         push_back(val);
-    } */
+    }
 }
 
 TEMPLINL
@@ -166,6 +169,7 @@ typename SDDLIST::Ptr_CNode SDDLIST::find (const T& val) noexcept
             return ptr;
         }
     }
+    return nullptr;
 }
 
 TEMPLINL
@@ -253,6 +257,17 @@ void SDDLIST::sort() noexcept
         }
         if(noSwap) break;
     }
+}
+
+TEMPLINL
+void SDDLIST::afficher() noexcept
+{
+    std::cout << "Affichage de la liste" << std::endl;
+    for (Ptr_CNode Ptr(m_Head); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
+    {
+        std::cout << Ptr->GetData() << std::endl;
+    }
+    std::cout << "fin de la liste" << std::endl;
 }
 
 #endif // CLIST_HXX

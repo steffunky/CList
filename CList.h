@@ -45,6 +45,8 @@ namespace nsSdD
         void merge (CList & x) noexcept;
         void assign (unsigned n, const T& val) noexcept;
 
+        void afficher () noexcept;
+
       private :
         Ptr_CNode m_Head;
         Ptr_CNode m_Tail;

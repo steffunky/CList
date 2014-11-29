@@ -21,18 +21,20 @@ namespace
     {
 
         cout << "lol" << endl;
-        CList<int> listeDuree (10);
+        CList<int> listeDuree(1);
+        listeDuree.push_back(2);
+        //CList<int> listeDuree2;
+        //listeDuree.push_front(2);
+  //      listeDuree2.push_back(4);
+//        listeDuree = listeDuree2;
 
-        for (unsigned i = 0; i< 10; ++i)
-        {
-            //listeDuree.push_back(4);
-        }
+        listeDuree.afficher();
+        //listeDuree.push_front(4);
+        //listeDuree.remove(2);
+        //CList<int> listeDuree2(listeDuree);   //copie de listeDuree
+        //CList<int> listeDuree3 (5, -3);
 
-        CList<int> listeDuree2(listeDuree);   //copie de listeDuree
-
-        cout << "lol" << endl;
-
-       cout << "On créer 1 CListe de" << "\033[34mCDUREE " << "et une copie de ce" << "\033[34mCList" << endl << endl << endl;
+       cout << "On créer 1 CListe de " << "\033[34mCDUREE " << "et une copie de ce " << "\033[34mCList" << endl;
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien égaux" << endl;
 /*
        IZI_ASSERT(listeDuree == listeDuree2);

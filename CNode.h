@@ -32,6 +32,8 @@ namespace nsSdD
         void SetSuivant (const Ptr_CNode & Suivant) noexcept;
         void SetPrecedent (const Ptr_CNode & Precedent) noexcept;
 
+        CNode<T>& operator=  (const Ptr_CNode & Node) noexcept;
+
       private :
         T m_Data;
         Ptr_CNode m_Suivant;
