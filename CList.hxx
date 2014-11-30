@@ -4,6 +4,8 @@
 #include "CList.h"
 
 #include <iostream>
+#include <utility>
+
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
@@ -71,14 +73,14 @@ typename SDDLIST::Ptr_CNode SDDLIST::back () const noexcept
 TEMPLINL
 bool SDDLIST::empty () const noexcept
 {
-    return m_Head->GetSuivant() == nullptr;
+    return m_Head->GetSuivant() == m_Tail;
 }
 
 TEMPLINL
 unsigned SDDLIST::size () const noexcept
 {
     unsigned size = 0;
-    for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail->GetPrecedent(); Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
     {
         ++size;
     }
@@ -122,7 +124,7 @@ void SDDLIST::push_back (const T & val) noexcept
 TEMPLINL
 void SDDLIST::pop_back () throw()
 {
-    remove(m_Tail->GetPrecedent());
+    remove(m_Tail->GetPrecedent()->GetData());
 }
 
 TEMPLINL
@@ -130,9 +132,9 @@ void SDDLIST::reverse () noexcept
 {
     Ptr_CNode Start = m_Head->GetSuivant();
     Ptr_CNode End = m_Tail->GetPrecedent();
-    for (; End->GetSuivant() == Start; Start = Start->GetSuivant(), End = End->GetPrecedent())
+    for (; End->GetSuivant() != Start && End != Start; Start = Start->GetSuivant(), End = End->GetPrecedent())
     {
-        std::swap(Start, End);
+        swap(Start, End);
     }
 }
 
@@ -203,7 +205,7 @@ void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
     {
         for(; n > size(); --n)
         {
-            push_back(new CNode<T>(val));
+            push_back(val);
         }
     }
 }
@@ -254,7 +256,8 @@ void SDDLIST::sort() noexcept
         {
             if(Ptr->GetData() > Ptr->GetSuivant()->GetData())
             {
-                swap (Ptr->GetData(), Ptr->GetSuivant()->GetData());
+                Ptr_CNode PtrSuivant = Ptr->GetSuivant();
+                swap (Ptr, PtrSuivant);
                 noSwap = false;
             }
         }
@@ -271,6 +274,14 @@ void SDDLIST::afficher() noexcept
         std::cout << Ptr->GetData() << std::endl;
     }
     std::cout << "fin de la liste" << std::endl;
+}
+
+TEMPLINL
+void SDDLIST::swap(SDDLIST::Ptr_CNode& PtrA, SDDLIST::Ptr_CNode& PtrB) noexcept
+{
+    T Temp = PtrA->GetData();
+    PtrA->SetData(PtrB->GetData());
+    PtrB->SetData(Temp);
 }
 
 #endif // CLIST_HXX
