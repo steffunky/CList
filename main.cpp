@@ -23,11 +23,14 @@ namespace
         cout << "lol" << endl;
         CList<int> listeDuree(3, -4);
         listeDuree.push_front(2);
+        CList<int> liste2 (listeDuree);
         //listeDuree.push_front(2);
   //      listeDuree2.push_back(4);
 //        listeDuree = listeDuree2;
 
-        listeDuree.afficher();
+        liste2.afficher();
+        liste2.clear();
+        liste2.afficher();
         //listeDuree.push_front(4);
         //listeDuree.remove(2);
         //CList<int> listeDuree2(listeDuree);   //copie de listeDuree
