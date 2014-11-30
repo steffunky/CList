@@ -52,6 +52,7 @@ namespace nsSdD
         Ptr_CNode m_Tail;
 
         Ptr_CNode find (const T& val) noexcept;
+        void swap(Ptr_CNode& PtrA, Ptr_CNode& PtrB) noexcept;
 
     };
 

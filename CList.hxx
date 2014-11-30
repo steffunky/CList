@@ -4,6 +4,7 @@
 #include "CList.h"
 
 #include <iostream>
+#include <utility> // swap()
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
@@ -54,6 +55,14 @@ SDDLIST::~CList (void) noexcept
 {
     /*delete m_Head;
     delete m_Tail; */
+}
+
+TEMPLINL
+void SDDLIST::swap(SDDLIST::Ptr_CNode& PtrA, SDDLIST::Ptr_CNode& PtrB) noexcept
+{
+    T Temp = PtrA->GetData();
+    PtrA->SetData(PtrB->GetData());
+    PtrB->SetData(Temp);
 }
 
 TEMPLINL
@@ -130,9 +139,9 @@ void SDDLIST::reverse () noexcept
 {
     Ptr_CNode Start = m_Head->GetSuivant();
     Ptr_CNode End = m_Tail->GetPrecedent();
-    for (; End->GetSuivant() == Start; Start = Start->GetSuivant(), End = End->GetPrecedent())
+    for (; End->GetSuivant() != Start && End != Start; Start = Start->GetSuivant(), End = End->GetPrecedent())
     {
-        std::swap(Start, End);
+        swap(Start, End);
     }
 }
 
@@ -254,7 +263,8 @@ void SDDLIST::sort() noexcept
         {
             if(Ptr->GetData() > Ptr->GetSuivant()->GetData())
             {
-                swap (Ptr->GetData(), Ptr->GetSuivant()->GetData());
+                Ptr_CNode PtrSuivant = Ptr->GetSuivant();
+                swap(Ptr,PtrSuivant);
                 noSwap = false;
             }
         }

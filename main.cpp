@@ -24,17 +24,37 @@ namespace
         CList<int> listeDuree(3, -4);
         listeDuree.push_front(2);
         CList<int> liste2 (listeDuree);
-        //listeDuree.push_front(2);
-  //      listeDuree2.push_back(4);
-//        listeDuree = listeDuree2;
+        listeDuree.push_front(2);
+        //listeDuree2.push_back(4);
+        //listeDuree = listeDuree2;
 
         liste2.afficher();
         liste2.clear();
         liste2.afficher();
-        //listeDuree.push_front(4);
-        //listeDuree.remove(2);
-        //CList<int> listeDuree2(listeDuree);   //copie de listeDuree
+        listeDuree.push_front(4);
+        listeDuree.remove(2);
+        CList<int> listeDuree2(listeDuree);   //copie de listeDuree
         //CList<int> listeDuree3 (5, -3);
+
+        CList<int> listeSort;
+        listeSort.push_back(0);
+        listeSort.push_back(5);
+        listeSort.push_back(-2);
+        listeSort.push_back(7);
+        listeSort.push_back(6);
+        listeSort.push_back(8);
+        listeSort.push_back(100);
+        listeSort.push_back(-2);
+        listeSort.push_back(0);
+        listeSort.afficher();
+        cout << "sort()" << endl;
+        listeSort.sort();
+        listeSort.afficher();
+        cout << "reverse()" << endl;
+        listeSort.reverse();
+        listeSort.afficher();
+
+
 
        cout << "On créer 1 CListe de " << "\033[34mCDUREE " << "et une copie de ce " << "\033[34mCList" << endl;
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien égaux" << endl;
