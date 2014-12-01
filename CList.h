@@ -34,7 +34,7 @@ namespace nsSdD
         void swap (CList<T> & List) noexcept;
         void clear () noexcept;
 
-        void remove (const T & Node) noexcept;
+        void remove (const T & val) noexcept;
         void unique () noexcept;
 
         void sort () noexcept;
@@ -45,11 +45,14 @@ namespace nsSdD
         void merge (CList & x) noexcept;
         void assign (unsigned n, const T& val) noexcept;
 
-        void afficher () noexcept;
+        unsigned max_size() noexcept;
+
+        void Remove (const Ptr_CNode & Node) noexcept;
 
       private :
         Ptr_CNode m_Head;
         Ptr_CNode m_Tail;
+        unsigned m_MaxSize;
 
         Ptr_CNode find (const T& val) noexcept;
         void swap (Ptr_CNode &PtrA, Ptr_CNode &PtrB) noexcept;

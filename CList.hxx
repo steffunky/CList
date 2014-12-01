@@ -145,8 +145,8 @@ max_size
 TEMPLINL
 void SDDLIST::swap (CList<T> & List) noexcept
 {
-    CList ListInter (this);
-    this = List;
+    CList<T> ListInter (*this);
+    *this = List;
     List = ListInter;
 }
 
@@ -187,6 +187,7 @@ void SDDLIST::remove (const T & val) noexcept
         Node->GetPrecedent()->SetSuivant(Node->GetSuivant());
         Node->SetSuivant(nullptr);
         Node->SetPrecedent(nullptr);
+        remove (val);
     }
 }
 
@@ -232,12 +233,11 @@ void SDDLIST::assign (unsigned n, const T& val) noexcept
 TEMPLINL
 void SDDLIST::unique() noexcept
 {
-    Ptr_CNode Ptr = front();
-    for(; Ptr != back();)
+    for(Ptr_CNode Ptr = front(); Ptr != back();)
     {
         if( Ptr->GetData() == Ptr->GetSuivant()->GetData() )
         {
-            remove(Ptr->GetSuivant());
+            Remove(Ptr->GetSuivant()); // remove le noeud normalement
         }
         else
         {
@@ -266,22 +266,27 @@ void SDDLIST::sort() noexcept
 }
 
 TEMPLINL
-void SDDLIST::afficher() noexcept
-{
-    std::cout << "Affichage de la liste" << std::endl;
-    for (Ptr_CNode Ptr(m_Head); Ptr != nullptr; Ptr = Ptr->GetSuivant())
-    {
-        std::cout << Ptr->GetData() << std::endl;
-    }
-    std::cout << "fin de la liste" << std::endl;
-}
-
-TEMPLINL
 void SDDLIST::swap(SDDLIST::Ptr_CNode& PtrA, SDDLIST::Ptr_CNode& PtrB) noexcept
 {
     T Temp = PtrA->GetData();
     PtrA->SetData(PtrB->GetData());
     PtrB->SetData(Temp);
+}
+
+TEMPLINL
+unsigned SDDLIST::max_size() noexcept
+{
+    m_MaxSize = 10000;
+    return m_MaxSize;
+}
+
+TEMPLINL
+void SDDLIST::Remove(const Ptr_CNode & Ptr) noexcept
+{
+    Ptr->GetPrecedent()->SetSuivant(Ptr->GetSuivant());
+    Ptr->GetSuivant()->SetPrecedent(Ptr->GetPrecedent());
+    Ptr->SetSuivant(nullptr);
+    Ptr->SetPrecedent(nullptr);
 }
 
 #endif // CLIST_HXX

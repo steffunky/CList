@@ -17,6 +17,17 @@ namespace
         return rand()% max + min;
     }
 
+    template <typename T>
+    void afficher(const CList<T> & List) noexcept
+    {
+        cout << "Affichage de la liste" << endl;
+        for (std::shared_ptr<CNode<T>> Ptr(List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
+        {
+            cout << Ptr->GetData() << endl;
+        }
+        cout << "fin de la liste" << endl;
+    }
+
     void TestCDuree()
     {
 
@@ -24,13 +35,20 @@ namespace
         CList<int> listeDuree(3, -4);
         listeDuree.push_front(2);
         listeDuree.push_front(5);
-        unsigned size = listeDuree.size();
+        //unsigned size = listeDuree.size();
         listeDuree.reverse();
-        listeDuree.afficher();
+        afficher(listeDuree);
         bool fal = listeDuree.empty();
         CList<int> liste;
+        unsigned maxsize = listeDuree.max_size();
         fal = liste.empty();
-        cout << endl << size << endl << fal;
+        cout << endl << maxsize << endl << fal << endl;
+        liste.swap(listeDuree);
+        liste.unique();
+        listeDuree.push_front(8);
+        liste.merge(listeDuree);
+        liste.assign(4, 100);
+        afficher(liste);
         //listeDuree.push_front(4);
         //listeDuree.remove(2);
         //CList<int> listeDuree2(listeDuree);   //copie de listeDuree
