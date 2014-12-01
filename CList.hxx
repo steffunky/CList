@@ -13,14 +13,14 @@
 
 TEMPLINL
 SDDLIST::CList () noexcept
-    : m_Head (std::make_shared<CNode<T>>(0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>>(T(), nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (T(), nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
 }
 
 TEMPLINL
 SDDLIST::CList (unsigned n) noexcept
-    : m_Head (std::make_shared<CNode<T>>(0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>>(T(), nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (T(), nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
     for (unsigned i = 0; i < n; ++i)
@@ -31,7 +31,7 @@ SDDLIST::CList (unsigned n) noexcept
 
 TEMPLINL
 SDDLIST::CList (unsigned n, const T & val) noexcept
-    : m_Head (std::make_shared<CNode<T>>(0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>>(T(), nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (T(), nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
     for (unsigned i = 0; i < n; ++i)
@@ -42,7 +42,7 @@ SDDLIST::CList (unsigned n, const T & val) noexcept
 
 TEMPLINL
 SDDLIST::CList (const CList & List) noexcept
-    : m_Head (std::make_shared<CNode<T>> (0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>> (T(), nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (T(), nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
     for (Ptr_CNode Ptr (List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
