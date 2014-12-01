@@ -52,6 +52,7 @@ namespace
         afficher(listeDuree);
         CList<int> liste3;
         liste3.push_back(5);
+        liste.sort();
         afficher(liste3);
         //listeDuree.push_front(4);
         //listeDuree.remove(2);

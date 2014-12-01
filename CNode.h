@@ -22,7 +22,7 @@ namespace nsSdD
                const Ptr_CNode & Suivant = nullptr,
                const Ptr_CNode & Precedent = nullptr) noexcept;
 
-        ~CNode () noexcept;
+        virtual ~CNode () noexcept;
 
         T GetData () const noexcept;
         Ptr_CNode GetSuivant () const noexcept;

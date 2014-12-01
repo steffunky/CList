@@ -67,4 +67,8 @@ nsSdD::CNode<T>& SDDELEM::operator= (const Ptr_CNode & val) noexcept
     m_Precedent = val.GetPrecedent();
 }
 
+#undef SDDELEM
+#undef TEMPLINL
+#undef TEMPL
+
 #endif // CNODE_HXX

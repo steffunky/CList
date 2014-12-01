@@ -14,7 +14,7 @@ namespace nsSdD
         explicit CList (unsigned n) noexcept;
         CList (unsigned n, const T & val) noexcept;
         CList (const CList & x) noexcept;
-        ~CList (void) noexcept;
+        virtual ~CList (void) noexcept;
 
         Ptr_CNode front () const noexcept;
         Ptr_CNode back () const noexcept;

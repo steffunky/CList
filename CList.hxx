@@ -1,8 +1,6 @@
 #ifndef __CLIST_HXX__
 #define __CLIST_HXX__
 
-#include <utility>
-
 #include "CList.h"
 
 
@@ -289,4 +287,7 @@ void SDDLIST::Remove(const Ptr_CNode & Ptr) noexcept
     Ptr->SetPrecedent(nullptr);
 }
 
+#undef TEMPLINL
+#undef TEMPL
+#undef SDDLIST
 #endif // CLIST_HXX
