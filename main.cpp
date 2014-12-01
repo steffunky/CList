@@ -31,7 +31,7 @@ namespace
     void TestCDuree()
     {
 
-        cout << "lol" << endl;
+        /*cout << "lol" << endl;
         CList<int> listeDuree(3, -4);
         listeDuree.push_front(2);
         listeDuree.push_front(5);
@@ -48,7 +48,10 @@ namespace
         listeDuree.push_front(8);
         liste.merge(listeDuree);
         liste.assign(4, 100);
-        afficher(liste);
+        afficher(liste); */
+        CList<int> liste3;
+        liste3.push_back(5);
+        afficher(liste3);
         //listeDuree.push_front(4);
         //listeDuree.remove(2);
         //CList<int> listeDuree2(listeDuree);   //copie de listeDuree

@@ -1,10 +1,10 @@
 #ifndef __CLIST_HXX__
 #define __CLIST_HXX__
 
+#include <utility>
+
 #include "CList.h"
 
-#include <iostream>
-#include <utility>
 
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
@@ -13,14 +13,14 @@
 
 TEMPLINL
 SDDLIST::CList () noexcept
-    : m_Head (new CNode<T>(0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>>(0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
 }
 
 TEMPLINL
 SDDLIST::CList (unsigned n) noexcept
-    : m_Head (new CNode<T>(0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>>(0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
     for (unsigned i = 0; i < n; ++i)
@@ -31,7 +31,7 @@ SDDLIST::CList (unsigned n) noexcept
 
 TEMPLINL
 SDDLIST::CList (unsigned n, const T & val) noexcept
-    : m_Head (new CNode<T>(0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>>(0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
     for (unsigned i = 0; i < n; ++i)
@@ -42,7 +42,7 @@ SDDLIST::CList (unsigned n, const T & val) noexcept
 
 TEMPLINL
 SDDLIST::CList (const CList & List) noexcept
-    : m_Head (new CNode<T> (0, nullptr, nullptr)), m_Tail (new CNode<T> (0, nullptr, m_Head))
+    : m_Head (std::make_shared<CNode<T>> (0, nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (0, nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
     for (Ptr_CNode Ptr (List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
@@ -102,7 +102,7 @@ CList<T>& SDDLIST::operator= (const CList & List) noexcept
 TEMPLINL
 void SDDLIST::push_front (const T & val) noexcept
 {
-    Ptr_CNode Node (new CNode<T>(val, m_Head->GetSuivant(), m_Head));
+    Ptr_CNode Node (std::make_shared<CNode<T>>(val, m_Head->GetSuivant(), m_Head));
     m_Head->GetSuivant()->SetPrecedent(Node);
     m_Head->SetSuivant(Node);
 }
@@ -116,7 +116,7 @@ void SDDLIST::pop_front () noexcept
 TEMPLINL
 void SDDLIST::push_back (const T & val) noexcept
 {
-    Ptr_CNode Node (new CNode<T>(val, m_Tail, m_Tail->GetPrecedent()));
+    Ptr_CNode Node (std::make_shared<CNode<T>>(val, m_Tail, m_Tail->GetPrecedent()));
     m_Tail->GetPrecedent()->SetSuivant(Node);
     m_Tail->SetPrecedent(Node);
 }
