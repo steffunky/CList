@@ -62,9 +62,9 @@ void SDDELEM::SetPrecedent (const Ptr_CNode & Precedent) noexcept
 TEMPLINL
 nsSdD::CNode<T>& SDDELEM::operator= (const Ptr_CNode & val) noexcept
 {
-    m_Data = val.GetData();
-    m_Suivant = val.GetSuivant();
-    m_Precedent = val.GetPrecedent();
+    m_Data = val->GetData();
+    m_Suivant = val->GetSuivant();
+    m_Precedent = val->GetPrecedent();
 }
 
 #undef SDDELEM
