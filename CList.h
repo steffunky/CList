@@ -47,16 +47,14 @@ namespace nsSdD
 
         unsigned max_size() noexcept;
 
-        void Remove (const Ptr_CNode & Node) noexcept;
-
       private :
         Ptr_CNode m_Head;
         Ptr_CNode m_Tail;
-        unsigned m_MaxSize;
+        const static unsigned m_MaxSize = 10000;
 
         Ptr_CNode find (const T& val) noexcept;
         void swap (Ptr_CNode &PtrA, Ptr_CNode &PtrB) noexcept;
-
+        void Remove (const Ptr_CNode & Node) noexcept;
     };
 
     #include "CList.hxx"

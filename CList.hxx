@@ -272,9 +272,8 @@ void SDDLIST::swap(SDDLIST::Ptr_CNode& PtrA, SDDLIST::Ptr_CNode& PtrB) noexcept
 }
 
 TEMPLINL
-unsigned SDDLIST::max_size() noexcept
+const static unsigned SDDLIST::max_size() noexcept
 {
-    m_MaxSize = 10000;
     return m_MaxSize;
 }
 
