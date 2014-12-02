@@ -59,7 +59,7 @@ namespace nsSdD
 
     };
 
-
+    #include "CList.hxx"
 }
 
 #endif // CLIST_H

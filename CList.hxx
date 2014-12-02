@@ -108,7 +108,7 @@ void SDDLIST::push_front (const T & val) noexcept
 TEMPLINL
 void SDDLIST::pop_front () noexcept
 {
-    remove(m_Head->GetSuivant());
+    remove(m_Head->GetSuivant()->GetData());
 }
 
 TEMPLINL
