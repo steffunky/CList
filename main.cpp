@@ -4,7 +4,8 @@
 #include "CNode.h"			// CNode
 #include "CDuree.h"			// CDuree
 #include "IziAssert.h"      // IZI_ASSERT()
-#include "CList.h"          // CList
+#include "CListV1.h"          // CList
+#include "CListV2.h"
 
 using namespace std;
 using namespace nsSdD;
@@ -18,7 +19,7 @@ namespace
     }
 
     template <typename T>
-    void afficher(const CList<T> & List) noexcept
+    void afficher(const CListV1<T> & List) noexcept
     {
         cout << "Affichage de la liste" << endl;
         for (std::shared_ptr<CNode<T>> Ptr(List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
@@ -32,14 +33,14 @@ namespace
     {
 
         cout << "lol" << endl;
-        CList<int> listeDuree(3, -4);
+        CListV1<int> listeDuree(3, -4);
         listeDuree.push_front(2);
         listeDuree.push_front(5);
         //unsigned size = listeDuree.size();
         listeDuree.reverse();
         afficher(listeDuree);
         bool fal = listeDuree.empty();
-        CList<int> liste;
+        CListV1<int> liste;
         unsigned maxsize = listeDuree.max_size();
         fal = liste.empty();
         cout << endl << maxsize << endl << fal << endl;
@@ -50,7 +51,7 @@ namespace
         liste.assign(4, 100);
         afficher(liste);
         afficher(listeDuree);
-        CList<int> liste3;
+        CListV1<int> liste3;
         liste3.push_back(5);
         liste.sort();
         afficher(liste3);

@@ -45,4 +45,4 @@ namespace nsSdD
     #undef Ptr_CNode
 }
 
-#endif /* CNODE_H_ */
+#endif /* CNODEV1_H_ */

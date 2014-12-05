@@ -10,10 +10,6 @@ CONFIG += c++11
 CONFIG += -Wall
 
 HEADERS += \
-    CNode.h \
-    CNode.hxx \
-    CList.h \
-    CList.hxx \
     CDuree.h \
     CstCodErr.h \
     CEditable.h \
@@ -21,5 +17,12 @@ HEADERS += \
     CDuree.hxx \
     CException.h \
     CException.hxx \
-    IziAssert.h
+    IziAssert.h \
+    CListV1.h \
+    CListV1.hxx \
+    CNode.h \
+    CNode.hxx \
+    CListV2.h \
+    CIterator.hxx \
+    CIterator.h
 
