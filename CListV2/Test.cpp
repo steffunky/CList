@@ -3,11 +3,12 @@
 #include "CDuree.h"			// CDuree
 #include <ctime>            //srand(), rand()
 #include "IziAssert.h"      // IZI_ASSERT()
+#include "CList.h"
 
 template <typename T>
 #define CNODET nsSdD::CNode<T>
 #define CDUREE nsUtil::CDuree
-typedef  nsSdD::CList CLIST;
+ypedef  nsSdD::CList CLIST;
 typedef CNODET::CNode<CDUREE::CDuree> CNODEDUREE;
 
 namespace
@@ -27,7 +28,7 @@ namespace
 
         CLIST::CList listeDuree2(listeDuree);   //copie de listeDuree
 
-
+/*
        cout << "On créer 1 CListe de" << "\033[34mCDUREE " << "et une copie de ce" << "\033[34mCList" << endl << endl << endl;
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien égaux" << endl;
        IZI_ASSERT(listeDuree == listeDuree2);
@@ -54,7 +55,7 @@ namespace
        //   A DECOMMENTER POUR LA V2
        //
        //
-       /*
+
        cout << "On ajoute un" << "\033[34mCDUREE " << "à la 5e position de "<< "\033[34mCList" << endl;
        IZI_ASSERT(listeDuree.insert(5,new CDuree()));
        cout << "On vérifie que les 2" << "\033[34mCList" << "soit bien différents" << endl;
@@ -62,7 +63,7 @@ namespace
        cout << "On supprime le" << "\033[34mCDUREE " << "à la 5e position de "<< "\033[34mCList" << endl;
        IZI_ASSERT(listeDuree.erase(5));
        */
-       
+
        
     }
 

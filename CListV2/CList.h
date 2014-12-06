@@ -2,6 +2,8 @@
 #define __CLIST_H__
 
 #include "CNode.h"
+#include "CIterator.h"
+#include "CRIterator.h"
 
 namespace nsSdD
 {
@@ -10,6 +12,11 @@ namespace nsSdD
     {
       public :
         typedef std::shared_ptr<CNode<T>> Ptr_CNode;
+        typedef CIterator<T> iterator;
+        typedef CIterator<const T> const_iterator;
+        typedef CRIterator<T> reverse_iterator;
+        typedef CRIterator<const T> const_reverse_iterator;
+
         explicit CList () noexcept;
         explicit CList (unsigned n) noexcept;
         CList (unsigned n, const T & val) noexcept;
@@ -24,7 +31,7 @@ namespace nsSdD
 
         unsigned max_size() const noexcept;
 
-        CList& operator= (const CList & List) noexcept;
+        CList& operator= (const CList<T> & List) noexcept;
         void push_front (const T & val) noexcept;
         void pop_front () noexcept;
 
@@ -45,7 +52,18 @@ namespace nsSdD
         void merge (CList & x) noexcept;
         void assign (unsigned n, const T& val) noexcept;
 
-        void GetSuivant() noexcept;
+        iterator insert (iterator position, const T& val) noexcept;
+        iterator erase (const_iterator position) noexcept;
+        void splice (const_iterator position, CList<T>& x) noexcept;
+
+        iterator begin() noexcept;
+        iterator end() noexcept;
+        reverse_iterator rbegin() noexcept;
+        reverse_iterator rend() noexcept;
+        const_iterator cbegin() const noexcept;
+        const_iterator cend() const noexcept;
+        const_reverse_iterator crbegin() const noexcept;
+        const_reverse_iterator crend () const noexcept;
 
       private :
         Ptr_CNode m_Head;
@@ -60,4 +78,4 @@ namespace nsSdD
     #include "CList.hxx"
 }
 
-#endif // __CLIST_H__
+#endif // CLIST_H

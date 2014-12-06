@@ -1,8 +1,7 @@
 #ifndef __CLIST_HXX__
 #define __CLIST_HXX__
 
-#include "CListV1.h"
-
+#include "CList.h"
 
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
@@ -108,7 +107,11 @@ void SDDLIST::push_front (const T & val) noexcept
 TEMPLINL
 void SDDLIST::pop_front () noexcept
 {
-    remove(m_Head->GetSuivant()->GetData());
+    Ptr_CNode Node (m_Head->GetSuivant());
+    Node->GetSuivant()->SetPrecedent(Node->GetPrecedent());
+    Node->GetPrecedent()->SetSuivant(Node->GetSuivant());
+    Node->SetSuivant(nullptr);
+    Node->SetPrecedent(nullptr);
 }
 
 TEMPLINL
@@ -122,7 +125,11 @@ void SDDLIST::push_back (const T & val) noexcept
 TEMPLINL
 void SDDLIST::pop_back () throw()
 {
-    remove(m_Tail->GetPrecedent()->GetData());
+    Ptr_CNode Node (m_Tail->GetPrecedent());
+    Node->GetSuivant()->SetPrecedent(Node->GetPrecedent());
+    Node->GetPrecedent()->SetSuivant(Node->GetSuivant());
+    Node->SetSuivant(nullptr);
+    Node->SetPrecedent(nullptr);
 }
 
 TEMPLINL
@@ -135,10 +142,6 @@ void SDDLIST::reverse () noexcept
         swap(Start, End);
     }
 }
-
-/* Pas sur de devoir les faire étant donnée quelles prennent un iterator en argument
-max_size
-*/
 
 TEMPLINL
 void SDDLIST::swap (CList<T> & List) noexcept
@@ -192,17 +195,18 @@ void SDDLIST::remove (const T & val) noexcept
 TEMPLINL
 void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
 {
+    unsigned taille = size();
     if(n < size())
     {
-        for(; n < size(); ++n)
+        pop_back();
+        for(; n < taille; ++n)
         {
             pop_back();
-
         }
     }
     else if (n > size())
     {
-        for(; n > size(); --n)
+        for(; n > taille; --n)
         {
             push_back(val);
         }
@@ -221,7 +225,7 @@ void SDDLIST::merge (CList & x) noexcept
 TEMPLINL
 void SDDLIST::assign (unsigned n, const T& val) noexcept
 {
-    resize(n);
+    resize(n, val);
     for(Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
     {
         Ptr->SetData(val);
@@ -235,7 +239,7 @@ void SDDLIST::unique() noexcept
     {
         if( Ptr->GetData() == Ptr->GetSuivant()->GetData() )
         {
-            Remove(Ptr->GetSuivant()); // remove le noeud normalement
+            Remove(Ptr->GetSuivant()->GetData()); // remove le noeud normalement
         }
         else
         {

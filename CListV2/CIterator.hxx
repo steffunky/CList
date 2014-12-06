@@ -30,9 +30,9 @@ typename SDDIT::CIterator<T> SDDIT::operator++ (int) noexcept
 }
 
 TEMPLINL
-typename SDDIT::Ptr_CNode& SDDIT::operator* () noexcept
+typename SDDIT::Ptr_CNode SDDIT::operator* () noexcept
 {
-    return std::shared_ptr<m_CurrentNode>;
+    return *m_CurrentNode;
 }
 
 TEMPLINL
