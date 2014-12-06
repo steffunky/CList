@@ -17,7 +17,7 @@ namespace
         return rand()% max + min;
     }
 
-    /*template <typename T>
+    template <typename T>
     void afficher(const CList<T> & List) noexcept
     {
         cout << "Affichage de la liste" << endl;
@@ -26,13 +26,14 @@ namespace
             cout << Ptr->GetData() << endl;
         }
         cout << "fin de la liste" << endl;
-    }*/
+    }
 
     void TestCDuree()
     {
 
         cout << "lol" << endl;
-        CList<int> listeDuree(3, -4);
+        CList<int> listeDuree;
+        afficher(listeDuree);
         /*listeDuree.push_front(2);
         listeDuree.push_front(5);
         //unsigned size = listeDuree.size();

@@ -12,17 +12,18 @@ namespace nsSdD
         private :
             Ptr_CNode m_CurrentNode;
         public :
-            CIterator<T> (const Ptr_CNode &CurrentNode = nullptr) noexcept;
-            CIterator<T> operator++ () noexcept;
-            CIterator<T> operator++(int) noexcept;
-            CIterator<T> operator-- () noexcept;
-            CIterator<T> operator-- (int) noexcept;
-            CIterator<T> operator* () noexcept;
+            CIterator (const Ptr_CNode &CurrentNode = nullptr) noexcept;
+            CIterator operator++ () noexcept;
+            CIterator operator++(int) noexcept;
+            CIterator operator-- () noexcept;
+            CIterator operator-- (int) noexcept;
             Ptr_CNode GetCurrentNode() const noexcept;
-            std::shared_ptr<CIterator<T>> operator->() noexcept;
+            Ptr_CNode operator->() noexcept;
+            Ptr_CNode& operator* () noexcept;
             bool operator==(const CIterator<T> &It) noexcept;
             CIterator<T> operator= (const CIterator<T> &It) noexcept;
     };
+    #include "CIterator.hxx"
 }
 
 #endif // __CITERATOR_H__

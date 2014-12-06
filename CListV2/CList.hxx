@@ -2,7 +2,6 @@
 #define __CLIST_HXX__
 
 #include "CList.h"
-
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
@@ -49,6 +48,12 @@ SDDLIST::CList (const CList & List) noexcept
 }
 
 TEMPLINL
+SDDLIST::~CList() noexcept
+{
+
+}
+
+TEMPLINL
 typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
 {
     iterator It (m_Head);
@@ -59,7 +64,7 @@ typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
 TEMPLINL
 typename SDDLIST::Ptr_CNode SDDLIST::back() const noexcept
 {
-    iterator It (m_Head);
+    iterator It (m_Tail);
     --It;
     return *It;
 }
@@ -115,7 +120,8 @@ TEMPLINL
 void SDDLIST::push_back (const T &val) noexcept
 {
     iterator It (m_Tail);
-    insert(--It, val);
+    --It;
+    insert(It, val);
 }
 
 TEMPLINL
@@ -250,9 +256,11 @@ void SDDLIST::assign (unsigned n, const T& val) noexcept
 TEMPLINL
 typename SDDLIST::iterator SDDLIST::insert(iterator position, const T &val) noexcept
 {
+    Ptr_CNode pos = position->GetPrecedent();
     Ptr_CNode Node (std::make_shared<CNode<T>>(val, *position, position->GetPrecedent()));
     position->GetPrecedent()->SetSuivant(Node);
     position->SetPrecedent(Node);
+    return position;
 }
 
 TEMPLINL
