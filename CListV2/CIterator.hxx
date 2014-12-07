@@ -16,6 +16,11 @@ SDDIT::CIterator(const Ptr_CNode &CurrentNode) noexcept
 }
 
 TEMPLINL
+SDDIT::CIterator(const CIterator &It) noexcept
+    : m_CurrentNode(It.GetCurrentNode())
+{}
+
+TEMPLINL
 typename SDDIT SDDIT::operator++ () noexcept
 {
     m_CurrentNode = m_CurrentNode->GetSuivant();
@@ -74,6 +79,12 @@ typename SDDIT SDDIT::operator-- (int) noexcept
     CIterator<T> temp = *this;
     --(*this);
     return temp;
+}
+
+TEMPLINL
+bool SDDIT::operator!= (const CIterator<T> &It) noexcept
+{
+    return !(*this == It);
 }
 
 #undef TEMPL

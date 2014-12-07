@@ -13,6 +13,7 @@ namespace nsSdD
             Ptr_CNode m_CurrentNode;
         public :
             CIterator (const Ptr_CNode &CurrentNode = nullptr) noexcept;
+            CIterator (const CIterator &It) noexcept;
             CIterator operator++ () noexcept;
             CIterator operator++(int) noexcept;
             CIterator operator-- () noexcept;
@@ -22,6 +23,7 @@ namespace nsSdD
             Ptr_CNode& operator* () noexcept;
             bool operator==(const CIterator<T> &It) noexcept;
             CIterator operator= (const CIterator<T> &It) noexcept;
+            bool operator!= (const CIterator<T> &It) noexcept;
     };
     #include "CIterator.hxx"
 }

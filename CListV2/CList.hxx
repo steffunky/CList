@@ -2,6 +2,8 @@
 #define __CLIST_HXX__
 
 #include "CList.h"
+#include <iostream>
+
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
@@ -32,7 +34,7 @@ SDDLIST::CList (unsigned n, const T & val) noexcept
     m_Head->SetSuivant(m_Tail);
     for (unsigned i = 0; i < n; ++i)
     {
-        push_back(val);
+        push_front(val);
     }
 }
 
@@ -43,7 +45,7 @@ SDDLIST::CList (const CList & List) noexcept
     m_Head->SetSuivant(m_Tail);
     for (iterator It (List.begin()); It != List.end(); ++It)
     {
-        push_back(It->GetData());
+        push_front(It->GetData());
     }
 }
 
@@ -80,22 +82,23 @@ bool SDDLIST::empty() const noexcept
 TEMPLINL
 unsigned SDDLIST::size() const noexcept
 {
-    unsigned size;
-    for (iterator It (begin()); It != end(); ++It, ++size);
+    unsigned size = 0;
+    for (iterator It = begin(); It != end(); ++It)
+        ++size;
     return size;
 }
 
 TEMPLINL
 unsigned SDDLIST::max_size() const noexcept
 {
-    return max_size;
+    return m_MaxSize;
 }
 
 TEMPLINL
 CList<T>& SDDLIST::operator= (const CList & List) noexcept
 {
     clear();
-    for (iterator It (List.begin()); It != List.end(); ++It)
+    for (iterator It = List.begin(); It != List.end(); ++It)
     {
         push_back(It->GetData());
     }
@@ -119,16 +122,16 @@ void SDDLIST::pop_front() noexcept
 TEMPLINL
 void SDDLIST::push_back (const T &val) noexcept
 {
-    iterator It (m_Tail);
-    --It;
-    insert(It, val);
+    iterator It (end());
+    insert(--It, val);
 }
 
 TEMPLINL
 void SDDLIST::pop_back() noexcept
 {
-    iterator It (m_Tail);
-    erase (--It);
+    iterator It (end());
+    --It;
+   erase (It);
 }
 
 TEMPLINL
@@ -168,13 +171,26 @@ void SDDLIST::remove (const T & val) noexcept
 }
 
 TEMPLINL
+typename SDDLIST::Ptr_CNode SDDLIST::find (const T& val) noexcept
+{
+    for (Ptr_CNode ptr (m_Head->GetSuivant()); ptr != m_Tail; ptr = ptr->GetSuivant())
+    {
+        if (ptr->GetData() == val)
+        {
+            return ptr;
+        }
+    }
+    return nullptr;
+}
+
+TEMPLINL
 void SDDLIST::unique() noexcept
 {
     for(iterator It = begin(); It != end();)
     {
         if(It->GetData() == It->GetSuivant()->GetData() )
         {
-            Remove(It->GetSuivant()->GetData());
+            Remove(It->GetSuivant());
         }
         else
         {
@@ -186,15 +202,15 @@ void SDDLIST::unique() noexcept
 TEMPLINL
 void SDDLIST::sort() noexcept
 {
-    for(Ptr_CNode End = back();End != front(); End = End->GetPrecedent())
+    for(iterator End = end(); End != begin(); --End)
     {
         bool noSwap = true;
-        for(Ptr_CNode Ptr = front(); Ptr != End; Ptr = Ptr->GetSuivant())
+        for(iterator Start = begin(); Start != End; ++Start)
         {
-            if(Ptr->GetData() > Ptr->GetSuivant()->GetData())
+            if(Start->GetData() > Start->GetSuivant()->GetData())
             {
-                Ptr_CNode PtrSuivant = Ptr->GetSuivant();
-                swap (Ptr, PtrSuivant);
+                iterator ItSuivant = ++Start;
+                //this->swap (Start.GetCurrentNode(), ItSuivant.GetCurrentNode());
                 noSwap = false;
             }
         }
@@ -207,9 +223,9 @@ void SDDLIST::reverse () noexcept
 {
     iterator Start = begin();
     iterator End = end();
-    for (; End->GetSuivant() != *Start && *End != *Start; ++Start, --End)
+    for (; End->GetSuivant() != Start.GetCurrentNode() && End.GetCurrentNode() != Start.GetCurrentNode(); ++Start, --End)
     {
-        swap(Start, End);
+        std::swap(Start, End);
     }
 }
 
@@ -237,7 +253,7 @@ void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
 TEMPLINL
 void SDDLIST::merge(CList &list) noexcept
 {
-    for(iterator It = list.begin(); It != list.end(); ++It)
+    for(iterator It (list.begin()); It != list.end(); ++It)
     {
         push_back(It->GetData());
     }
@@ -256,24 +272,25 @@ void SDDLIST::assign (unsigned n, const T& val) noexcept
 TEMPLINL
 typename SDDLIST::iterator SDDLIST::insert(iterator position, const T &val) noexcept
 {
-    Ptr_CNode pos = position->GetPrecedent();
-    Ptr_CNode Node (std::make_shared<CNode<T>>(val, *position, position->GetPrecedent()));
+    Ptr_CNode Node (std::make_shared<CNode<T>>(val, position.GetCurrentNode(), position->GetPrecedent()));
     position->GetPrecedent()->SetSuivant(Node);
     position->SetPrecedent(Node);
     return position;
 }
 
 TEMPLINL
-typename SDDLIST::iterator SDDLIST::erase(const_iterator position) noexcept
+typename SDDLIST::iterator SDDLIST::erase(iterator position) noexcept
 {
+    iterator precedent (position->GetPrecedent());
     position->GetPrecedent()->SetSuivant(position->GetSuivant());
     position->GetSuivant()->SetPrecedent(position->GetPrecedent());
     position->SetSuivant(nullptr);
     position->SetPrecedent(nullptr);
+    return precedent;
 }
 
 TEMPLINL
-void SDDLIST::splice(const_iterator position, CList<T> &x) noexcept
+void SDDLIST::splice(iterator position, CList<T> &x) noexcept
 {
     for (iterator It = x.begin(); It != x.end(); ++It)
     {
@@ -284,11 +301,23 @@ void SDDLIST::splice(const_iterator position, CList<T> &x) noexcept
 TEMPLINL
 typename SDDLIST::iterator SDDLIST::begin() noexcept
 {
-    return iterator(front());
+    return iterator(m_Head->GetSuivant());
+}
+
+TEMPLINL
+const typename SDDLIST::iterator SDDLIST::begin() const noexcept
+{
+    return iterator(m_Head->GetSuivant());
 }
 
 TEMPLINL
 typename SDDLIST::iterator SDDLIST::end() noexcept
+{
+    return iterator(m_Tail);
+}
+
+TEMPLINL
+const typename SDDLIST::iterator SDDLIST::end() const noexcept
 {
     return iterator(m_Tail);
 }
@@ -328,5 +357,23 @@ typename SDDLIST::const_reverse_iterator SDDLIST::crend() const noexcept
 {
     return const_iterator(m_Head);
 }
+
+TEMPLINL
+void SDDLIST::Remove(const Ptr_CNode & Ptr) noexcept
+{
+    Ptr->GetPrecedent()->SetSuivant(Ptr->GetSuivant());
+    Ptr->GetSuivant()->SetPrecedent(Ptr->GetPrecedent());
+    Ptr->SetSuivant(nullptr);
+    Ptr->SetPrecedent(nullptr);
+}
+
+TEMPLINL
+void SDDLIST::swap(SDDLIST::Ptr_CNode& PtrA, SDDLIST::Ptr_CNode& PtrB) noexcept
+{
+    T Temp = PtrA->GetData();
+    PtrA->SetData(PtrB->GetData());
+    PtrB->SetData(Temp);
+}
+
 
 #endif // CLIST_HXX

@@ -53,11 +53,13 @@ namespace nsSdD
         void assign (unsigned n, const T& val) noexcept;
 
         iterator insert (iterator position, const T& val) noexcept;
-        iterator erase (const_iterator position) noexcept;
-        void splice (const_iterator position, CList<T>& x) noexcept;
+        iterator erase (iterator position) noexcept;
+        void splice (iterator position, CList<T>& x) noexcept;
 
         iterator begin() noexcept;
+        const iterator begin() const noexcept;
         iterator end() noexcept;
+        const iterator end() const noexcept;
         reverse_iterator rbegin() noexcept;
         reverse_iterator rend() noexcept;
         const_iterator cbegin() const noexcept;
