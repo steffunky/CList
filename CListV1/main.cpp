@@ -152,7 +152,7 @@ namespace
        afficherList(liste5);
        //sort
        CList<T> liste5old = liste5;
-       cout << "\33[37mOn range cette \033[34mCList\33[37m avec sort() et on affiche \033[35mliste5\33[37m<"
+       cout << "\33[37mOn range cette \033[34mCList\33[37m avec sort() et on affiche \033[35mliste5\33[37m"
             << endl;
        liste5.sort();
 
@@ -228,6 +228,7 @@ namespace
 
 int main()
 {
+    srand(time(NULL));
     // CDUREE
     vector<bool> tabResDuree(16);
     vector<CDuree> tabParamsDuree {CDuree(200),CDuree(10),CDuree(11),CDuree(8),CDuree(5),CDuree(10)};
@@ -271,7 +272,7 @@ int main()
     cout << "On explique le problème de sort sur les pointeurs car dans la boucle, l'espace ou la variable utilisée pour la génération"
          << " aléatoire reprend le même espace mémoire à chaque boucle."<< endl;
 
-    //srand(time(NULL));
+
     //TestCDuree();
     return 0;
 }
