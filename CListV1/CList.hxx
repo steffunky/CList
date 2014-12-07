@@ -56,13 +56,13 @@ SDDLIST::~CList (void) noexcept
 }
 
 TEMPLINL
-T& SDDLIST::front() const noexcept
+T SDDLIST::front() const noexcept
 {
     return m_Head->GetSuivant()->GetData();
 }
 
 TEMPLINL
-T& SDDLIST::back () const noexcept
+T SDDLIST::back () const noexcept
 {
     return m_Tail->GetPrecedent()->GetData();
 }
@@ -77,7 +77,7 @@ TEMPLINL
 unsigned SDDLIST::size () const noexcept
 {
     unsigned size = 0;
-    for (Ptr_CNode Ptr (GetFirstNode()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
     {
         ++size;
     }
@@ -198,7 +198,6 @@ void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
     unsigned taille = size();
     if(n < size())
     {
-        pop_back();
         for(; n < taille; ++n)
         {
             pop_back();
@@ -239,7 +238,7 @@ void SDDLIST::unique() noexcept
     {
         if( Ptr->GetData() == Ptr->GetSuivant()->GetData() )
         {
-            Remove(Ptr->GetSuivant()->GetData()); // remove le noeud normalement
+            Remove(Ptr->GetSuivant());
         }
         else
         {
@@ -256,7 +255,7 @@ void SDDLIST::sort() noexcept
         bool noSwap = true;
         for(Ptr_CNode Ptr = GetFirstNode(); Ptr != End; Ptr = Ptr->GetSuivant())
         {
-            if(Ptr->GetData() > Ptr->GetSuivant()->GetData())
+            if(Ptr->GetData() < Ptr->GetSuivant()->GetData())
             {
                 Ptr_CNode PtrSuivant = Ptr->GetSuivant();
                 swap (Ptr, PtrSuivant);
@@ -297,13 +296,13 @@ void SDDLIST::GetSuivant () noexcept
 }
 
 TEMPLINL
-SDDLIST::Ptr_CNode SDDLIST::GetFirstNode () noexcept
+const typename SDDLIST::Ptr_CNode SDDLIST::GetFirstNode () const noexcept
 {
     return m_Head->GetSuivant();
 }
 
 TEMPLINL
-SDDLIST::Ptr_CNode SDDLIST::GetLastNode() noexcept
+const typename SDDLIST::Ptr_CNode SDDLIST::GetLastNode() const noexcept
 {
     return m_Tail->GetPrecedent();
 }

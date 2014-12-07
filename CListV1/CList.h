@@ -16,9 +16,9 @@ namespace nsSdD
         CList (const CList & x) noexcept;
         virtual ~CList (void) noexcept;
 
-        T& front () const noexcept;
+        T front () const noexcept;
         Ptr_CNode Front() const noexcept;
-        T& back () const noexcept;
+        T back () const noexcept;
         Ptr_CNode Back() const noexcept;
 
         bool empty () const noexcept;
@@ -48,6 +48,8 @@ namespace nsSdD
         void assign (unsigned n, const T& val) noexcept;
 
         void GetSuivant() noexcept;
+        const Ptr_CNode GetFirstNode () const noexcept;
+        const Ptr_CNode GetLastNode () const noexcept;
 
       private :
         Ptr_CNode m_Head;
