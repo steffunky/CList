@@ -21,7 +21,7 @@ namespace nsSdD
             Ptr_CNode operator->() noexcept;
             Ptr_CNode& operator* () noexcept;
             bool operator==(const CIterator<T> &It) noexcept;
-            CIterator<T> operator= (const CIterator<T> &It) noexcept;
+            CIterator operator= (const CIterator<T> &It) noexcept;
     };
     #include "CIterator.hxx"
 }

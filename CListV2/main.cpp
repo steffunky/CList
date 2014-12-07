@@ -18,22 +18,22 @@ namespace
     }
 
     template <typename T>
-    void afficher(const CList<T> & List) noexcept
+    /*void afficher(const CList<T> & List) noexcept
     {
         cout << "Affichage de la liste" << endl;
-        for (std::shared_ptr<CNode<T>> Ptr(List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
+        for (It; Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
         {
             cout << Ptr->GetData() << endl;
         }
         cout << "fin de la liste" << endl;
-    }
+    } */
 
     void TestCDuree()
     {
 
         cout << "lol" << endl;
         CList<int> listeDuree;
-        afficher(listeDuree);
+        //afficher(listeDuree);
         /*listeDuree.push_front(2);
         listeDuree.push_front(5);
         //unsigned size = listeDuree.size();
@@ -101,6 +101,7 @@ namespace
 int main()
 {
     //srand(time(NULL));
-    TestCDuree();
+    //TestCDuree();
+    cout << "helloword" << endl;
     return 0;
 }

@@ -54,7 +54,7 @@ SDDLIST::~CList() noexcept
 }
 
 TEMPLINL
-typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
+T& SDDLIST::front() const noexcept
 {
     iterator It (m_Head);
     ++It;
@@ -62,7 +62,7 @@ typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
 }
 
 TEMPLINL
-typename SDDLIST::Ptr_CNode SDDLIST::back() const noexcept
+T& SDDLIST::back() const noexcept
 {
     iterator It (m_Tail);
     --It;

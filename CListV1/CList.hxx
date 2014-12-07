@@ -56,15 +56,15 @@ SDDLIST::~CList (void) noexcept
 }
 
 TEMPLINL
-typename SDDLIST::Ptr_CNode SDDLIST::front() const noexcept
+T& SDDLIST::front() const noexcept
 {
-    return m_Head->GetSuivant();
+    return m_Head->GetSuivant()->GetData();
 }
 
 TEMPLINL
-typename SDDLIST::Ptr_CNode SDDLIST::back () const noexcept
+T& SDDLIST::back () const noexcept
 {
-    return m_Tail->GetPrecedent();
+    return m_Tail->GetPrecedent()->GetData();
 }
 
 TEMPLINL

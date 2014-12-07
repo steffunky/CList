@@ -16,14 +16,14 @@ SDDIT::CIterator(const Ptr_CNode &CurrentNode) noexcept
 }
 
 TEMPLINL
-SDDIT::CIterator SDDIT::operator++ () noexcept
+typename SDDIT SDDIT::operator++ () noexcept
 {
     m_CurrentNode = m_CurrentNode->GetSuivant();
     return *this;
 }
 
 TEMPLINL
-SDDIT::CIterator SDDIT::operator++ (int) noexcept
+typename SDDIT SDDIT::operator++ (int) noexcept
 {
     CIterator<T> temp = *this;
     ++(*this);
@@ -31,13 +31,13 @@ SDDIT::CIterator SDDIT::operator++ (int) noexcept
 }
 
 TEMPLINL
-SDDIT::Ptr_CNode& SDDIT::operator* () noexcept
+typename SDDIT::Ptr_CNode& SDDIT::operator* () noexcept
 {
     return *m_CurrentNode;
 }
 
 TEMPLINL
-SDDIT::Ptr_CNode SDDIT::operator-> () noexcept
+typename SDDIT::Ptr_CNode SDDIT::operator-> () noexcept
 {
     return m_CurrentNode;
 }
@@ -49,27 +49,27 @@ bool SDDIT::operator ==(const CIterator<T> &It) noexcept
 }
 
 TEMPLINL
-SDDIT::Ptr_CNode GetCurrentNode () const noexcept
+typename SDDIT::Ptr_CNode SDDIT::GetCurrentNode () const noexcept
 {
     return m_CurrentNode;
 }
 
 TEMPLINL
-SDDIT::CIterator SDDIT::operator= (const CIterator<T> &It) noexcept
+typename SDDIT SDDIT::operator= (const CIterator<T> &It) noexcept
 {
     m_CurrentNode = It.GetCurrentNode();
     return *this;
 }
 
 TEMPLINL
-SDDIT::CIterator SDDIT::operator-- () noexcept
+typename SDDIT SDDIT::operator-- () noexcept
 {
     m_CurrentNode = m_CurrentNode->GetPrecedent();
     return *this;
 }
 
 TEMPLINL
- SDDIT::CIterator SDDIT::operator-- (int) noexcept
+typename SDDIT SDDIT::operator-- (int) noexcept
 {
     CIterator<T> temp = *this;
     --(*this);
