@@ -17,7 +17,9 @@ namespace nsSdD
         virtual ~CList (void) noexcept;
 
         T& front () const noexcept;
+        Ptr_CNode Front() const noexcept;
         T& back () const noexcept;
+        Ptr_CNode Back() const noexcept;
 
         bool empty () const noexcept;
         unsigned size () const noexcept;

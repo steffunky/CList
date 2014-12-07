@@ -42,7 +42,7 @@ SDDLIST::CList (const CList & List) noexcept
     : m_Head (std::make_shared<CNode<T>> (T(), nullptr, nullptr)), m_Tail (std::make_shared<CNode<T>> (T(), nullptr, m_Head))
 {
     m_Head->SetSuivant(m_Tail);
-    for (Ptr_CNode Ptr (List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr (List.GetFirstNode()); Ptr != List.GetLastNode()->GetSuivant(); Ptr = Ptr->GetSuivant())
     {
         push_back(Ptr->GetData());
     }
@@ -77,7 +77,7 @@ TEMPLINL
 unsigned SDDLIST::size () const noexcept
 {
     unsigned size = 0;
-    for (Ptr_CNode Ptr (m_Head->GetSuivant()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr (GetFirstNode()); Ptr != m_Tail; Ptr = Ptr->GetSuivant())
     {
         ++size;
     }
@@ -89,7 +89,7 @@ TEMPLINL
 CList<T>& SDDLIST::operator= (const CList & List) noexcept
 {
     clear();
-    for (Ptr_CNode Ptr (List.front()); Ptr != List.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
+    for (Ptr_CNode Ptr (List.GetFirstNode()); Ptr != List.GetLastNode()->GetSuivant(); Ptr = Ptr->GetSuivant())
     {
         push_back(Ptr->GetData());
     }
@@ -107,7 +107,7 @@ void SDDLIST::push_front (const T & val) noexcept
 TEMPLINL
 void SDDLIST::pop_front () noexcept
 {
-    Ptr_CNode Node (m_Head->GetSuivant());
+    Ptr_CNode Node (GetFirstNode());
     Node->GetSuivant()->SetPrecedent(Node->GetPrecedent());
     Node->GetPrecedent()->SetSuivant(Node->GetSuivant());
     Node->SetSuivant(nullptr);
@@ -125,7 +125,7 @@ void SDDLIST::push_back (const T & val) noexcept
 TEMPLINL
 void SDDLIST::pop_back () throw()
 {
-    Ptr_CNode Node (m_Tail->GetPrecedent());
+    Ptr_CNode Node (GetLastNode());
     Node->GetSuivant()->SetPrecedent(Node->GetPrecedent());
     Node->GetPrecedent()->SetSuivant(Node->GetSuivant());
     Node->SetSuivant(nullptr);
@@ -155,7 +155,7 @@ TEMPLINL
 void SDDLIST::clear () noexcept
 {
     Ptr_CNode Next;
-    for (Ptr_CNode Ptr (front()); Ptr != m_Tail; Ptr = Next)
+    for (Ptr_CNode Ptr (GetFirstNode()); Ptr != m_Tail; Ptr = Next)
     {
         Next = Ptr->GetSuivant();
         Ptr->SetSuivant(nullptr);
@@ -216,7 +216,7 @@ void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
 TEMPLINL
 void SDDLIST::merge (CList & x) noexcept
 {
-    for(Ptr_CNode Ptr = x.front(); Ptr != x.back()->GetSuivant(); Ptr = Ptr->GetSuivant())
+    for(Ptr_CNode Ptr = x.GetFirstNode(); Ptr != x.GetLastNode()->GetSuivant(); Ptr = Ptr->GetSuivant())
     {
         push_back(Ptr->GetData());
     }
@@ -235,7 +235,7 @@ void SDDLIST::assign (unsigned n, const T& val) noexcept
 TEMPLINL
 void SDDLIST::unique() noexcept
 {
-    for(Ptr_CNode Ptr = front(); Ptr != back();)
+    for(Ptr_CNode Ptr = GetFirstNode(); Ptr != GetLastNode();)
     {
         if( Ptr->GetData() == Ptr->GetSuivant()->GetData() )
         {
@@ -251,10 +251,10 @@ void SDDLIST::unique() noexcept
 TEMPLINL
 void SDDLIST::sort() noexcept
 {
-    for(Ptr_CNode End = back();End != front(); End = End->GetPrecedent())
+    for(Ptr_CNode End = GetLastNode();End != GetFirstNode(); End = End->GetPrecedent())
     {
         bool noSwap = true;
-        for(Ptr_CNode Ptr = front(); Ptr != End; Ptr = Ptr->GetSuivant())
+        for(Ptr_CNode Ptr = GetFirstNode(); Ptr != End; Ptr = Ptr->GetSuivant())
         {
             if(Ptr->GetData() > Ptr->GetSuivant()->GetData())
             {
@@ -294,6 +294,18 @@ TEMPLINL
 void SDDLIST::GetSuivant () noexcept
 {
     for (Ptr_CNode Ptr = front(); Ptr != m_Tail; Ptr = Ptr->GetSuivant());
+}
+
+TEMPLINL
+SDDLIST::Ptr_CNode SDDLIST::GetFirstNode () noexcept
+{
+    return m_Head->GetSuivant();
+}
+
+TEMPLINL
+SDDLIST::Ptr_CNode SDDLIST::GetLastNode() noexcept
+{
+    return m_Tail->GetPrecedent();
 }
 
 #undef TEMPLINL
