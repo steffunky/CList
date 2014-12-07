@@ -55,13 +55,16 @@ namespace nsSdD
         iterator insert (iterator position, const T& val) noexcept;
         iterator erase (iterator position) noexcept;
         void splice (iterator position, CList<T>& x) noexcept;
+        void splice (iterator position, CList<T> &x, iterator i) noexcept;
 
         iterator begin() noexcept;
         const iterator begin() const noexcept;
         iterator end() noexcept;
         const iterator end() const noexcept;
         reverse_iterator rbegin() noexcept;
+        const reverse_iterator rbegin() const noexcept;
         reverse_iterator rend() noexcept;
+        const reverse_iterator rend() const noexcept;
         const_iterator cbegin() const noexcept;
         const_iterator cend() const noexcept;
         const_reverse_iterator crbegin() const noexcept;
@@ -75,6 +78,7 @@ namespace nsSdD
         Ptr_CNode find (const T& val) noexcept;
         void swap (Ptr_CNode &PtrA, Ptr_CNode &PtrB) noexcept;
         void Remove (const Ptr_CNode & Node) noexcept;
+        void swap(iterator& ItA, iterator& ItB) noexcept;
     };
 
     #include "CList.hxx"

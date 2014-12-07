@@ -1,36 +1,36 @@
-#ifndef __CITERATOR_HXX__
-#define __CITERATOR_HXX__
+#ifndef __CRITERATOR_HXX__
+#define __CRITERATOR_HXX__
 
-#include "CIterator.h"
+#include "CRIterator.h"
 
 #define TEMPL template<typename T>
 #define TEMPLINL TEMPL inline
 
-#define SDDIT nsSdD::CIterator<T>
+#define SDDIT nsSdD::CRIterator<T>
 
 TEMPLINL
-SDDIT::CIterator(const Ptr_CNode &CurrentNode) noexcept
+SDDIT::CRIterator(const Ptr_CNode &CurrentNode) noexcept
     : m_CurrentNode(CurrentNode)
 {
 
 }
 
 TEMPLINL
-SDDIT::CIterator(const CIterator &It) noexcept
+SDDIT::CRIterator(const CRIterator &It) noexcept
     : m_CurrentNode(It.GetCurrentNode())
 {}
 
 TEMPLINL
 typename SDDIT SDDIT::operator++ () noexcept
 {
-    m_CurrentNode = m_CurrentNode->GetSuivant();
+    m_CurrentNode = m_CurrentNode->GetPrecedent();
     return *this;
 }
 
 TEMPLINL
 typename SDDIT SDDIT::operator++ (int) noexcept
 {
-    CIterator<T> temp = *this;
+    CRIterator<T> temp = *this;
     ++(*this);
     return temp;
 }
@@ -49,7 +49,7 @@ typename SDDIT::Ptr_CNode SDDIT::operator-> () noexcept
 
 
 TEMPLINL
-bool SDDIT::operator ==(const CIterator<T> &It) noexcept
+bool SDDIT::operator ==(const CRIterator<T> &It) noexcept
 {
     return m_CurrentNode == It.GetCurrentNode();
 }
@@ -61,7 +61,7 @@ typename SDDIT::Ptr_CNode SDDIT::GetCurrentNode () const noexcept
 }
 
 TEMPLINL
-typename SDDIT SDDIT::operator= (const CIterator<T> &It) noexcept
+typename SDDIT SDDIT::operator= (const CRIterator<T> &It) noexcept
 {
     m_CurrentNode = It.GetCurrentNode();
     return *this;
@@ -70,7 +70,7 @@ typename SDDIT SDDIT::operator= (const CIterator<T> &It) noexcept
 TEMPLINL
 typename SDDIT SDDIT::operator-- () noexcept
 {
-    m_CurrentNode = m_CurrentNode->GetPrecedent();
+    m_CurrentNode = m_CurrentNode->GetSuivant();
     return *this;
 }
 

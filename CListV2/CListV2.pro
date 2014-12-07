@@ -25,5 +25,6 @@ HEADERS += \
     CNode.hxx \
     CRIterator.h \
     CstCodErr.h \
-    IziAssert.h
+    IziAssert.h \
+    CRIterator.hxx
 

@@ -123,7 +123,7 @@ TEMPLINL
 void SDDLIST::push_back (const T &val) noexcept
 {
     iterator It (end());
-    insert(--It, val);
+    insert(It, val);
 }
 
 TEMPLINL
@@ -202,15 +202,18 @@ void SDDLIST::unique() noexcept
 TEMPLINL
 void SDDLIST::sort() noexcept
 {
-    for(iterator End = end(); End != begin(); --End)
+    iterator End = end();
+    --End;
+    for(; End != begin(); --End)
     {
         bool noSwap = true;
         for(iterator Start = begin(); Start != End; ++Start)
         {
-            if(Start->GetData() > Start->GetSuivant()->GetData())
+            if(Start->GetData() < Start->GetSuivant()->GetData())
             {
                 iterator ItSuivant = ++Start;
-                //this->swap (Start.GetCurrentNode(), ItSuivant.GetCurrentNode());
+                --Start;
+                swap(Start,ItSuivant);
                 noSwap = false;
             }
         }
@@ -218,14 +221,16 @@ void SDDLIST::sort() noexcept
     }
 }
 
+
 TEMPLINL
 void SDDLIST::reverse () noexcept
 {
     iterator Start = begin();
     iterator End = end();
+    --End;
     for (; End->GetSuivant() != Start.GetCurrentNode() && End.GetCurrentNode() != Start.GetCurrentNode(); ++Start, --End)
     {
-        std::swap(Start, End);
+        swap(Start,End);
     }
 }
 
@@ -247,15 +252,6 @@ void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
         {
             push_back(val);
         }
-    }
-}
-
-TEMPLINL
-void SDDLIST::merge(CList &list) noexcept
-{
-    for(iterator It (list.begin()); It != list.end(); ++It)
-    {
-        push_back(It->GetData());
     }
 }
 
@@ -290,15 +286,6 @@ typename SDDLIST::iterator SDDLIST::erase(iterator position) noexcept
 }
 
 TEMPLINL
-void SDDLIST::splice(iterator position, CList<T> &x) noexcept
-{
-    for (iterator It = x.begin(); It != x.end(); ++It)
-    {
-        insert(position++, It->GetData());
-    }
-}
-
-TEMPLINL
 typename SDDLIST::iterator SDDLIST::begin() noexcept
 {
     return iterator(m_Head->GetSuivant());
@@ -325,19 +312,19 @@ const typename SDDLIST::iterator SDDLIST::end() const noexcept
 TEMPLINL
 typename SDDLIST::reverse_iterator SDDLIST::rbegin() noexcept
 {
-    return iterator (back());
+    return reverse_iterator (m_Tail->GetPrecedent());
 }
 
 TEMPLINL
 typename SDDLIST::reverse_iterator SDDLIST::rend() noexcept
 {
-    return iterator (m_Head);
+    return reverse_iterator (m_Head);
 }
 
 TEMPLINL
 typename SDDLIST::const_iterator SDDLIST::cbegin() const noexcept
 {
-    return const_iterator(front());
+    return const_iterator(m_Head->GetSuivant());
 }
 
 TEMPLINL
@@ -349,7 +336,7 @@ typename SDDLIST::const_iterator SDDLIST::cend() const noexcept
 TEMPLINL
 typename SDDLIST::const_reverse_iterator SDDLIST::crbegin() const noexcept
 {
-    return const_iterator (back());
+    return const_iterator (m_Tail->GetPrecedent());
 }
 
 TEMPLINL
@@ -368,11 +355,75 @@ void SDDLIST::Remove(const Ptr_CNode & Ptr) noexcept
 }
 
 TEMPLINL
-void SDDLIST::swap(SDDLIST::Ptr_CNode& PtrA, SDDLIST::Ptr_CNode& PtrB) noexcept
+void SDDLIST::swap(iterator& ItA, iterator& ItB) noexcept
 {
-    T Temp = PtrA->GetData();
-    PtrA->SetData(PtrB->GetData());
-    PtrB->SetData(Temp);
+    T Temp = ItA->GetData();
+    ItA->SetData(ItB->GetData());
+    ItB->SetData(Temp);
+}
+
+TEMPLINL
+const typename SDDLIST::reverse_iterator SDDLIST::rbegin() const noexcept
+{
+    return reverse_iterator (m_Tail->GetPrecedent());
+}
+
+TEMPLINL
+const typename SDDLIST::reverse_iterator SDDLIST::rend() const noexcept
+{
+    return reverse_iterator (m_Head);
+}
+
+TEMPLINL
+void SDDLIST::splice(iterator position, CList<T> &x, iterator i) noexcept
+{
+    i->GetPrecedent()->SetSuivant(i.GetCurrentNode()->GetSuivant());
+    i->GetSuivant()->SetPrecedent(i.GetCurrentNode()->GetPrecedent());
+    i->SetPrecedent(position.GetCurrentNode()->GetPrecedent());
+    i->SetSuivant(position.GetCurrentNode());
+    position->GetPrecedent()->SetSuivant(i.GetCurrentNode());
+    position->SetPrecedent(i.GetCurrentNode());
+}
+
+
+
+TEMPLINL
+void SDDLIST::splice(iterator position, CList<T> &x) noexcept
+{
+    for (iterator It = x.begin(); It != x.end(); It = x.begin())
+    {
+        splice(position,x,It);
+    }
+}
+
+
+TEMPLINL
+void SDDLIST::merge(CList &list) noexcept
+{
+    iterator It1 (begin());
+    iterator It2 (list.begin());
+    for(;;)
+    {
+        if(It2->GetData() < It1->GetData())
+        {
+            splice(It1,list,It2);
+            It2 = list.begin();
+            if(It2 == list.end())
+            {
+                break;
+            }
+        }
+        else
+        {
+            It1++;
+            if(It1 == end())
+            {
+                splice(It1,list);
+                break;
+            }
+        }
+
+    }
 }
 
 
