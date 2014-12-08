@@ -102,7 +102,7 @@ namespace
        // Test swap()
 
        cout << "\33[37mOn créer une \033[34mCList\33[37m de " << typeElem << " : \033[35mlistee3\33[37m "
-            << "et une copie de ce " << "\033[34mCList\33[37m de"<< typeElem <<" : \033[35mliste4\33[37m" << endl;
+            << "et une copie de ce " << "\033[34mCList\33[37m de "<< typeElem <<" : \033[35mliste4\33[37m" << endl;
        CList<T> liste3(5,tabElem[2]);
        CList<T> liste4(5,tabElem[2]);
        liste3.push_back(tabElem[3]);
@@ -239,11 +239,12 @@ namespace
 
        liste5.insert(liste5.begin(), tabElem[1]);
        liste5.insert(liste5.end(), tabElem[1]);
-       IZI_ASSERT(tabRes[17] = liste5.begin()->GetData() == liste5.front() && liste5.end()->GetData() == liste5.back())
-       cout << "On effectue l'inverse en appliquant erase() sur Clist.begin et erase sur Clist.end";
+       IZI_ASSERT(tabRes[17] = liste5.begin()->GetData() == liste5.front());
+       IZI_ASSERT(tabRes[18] = liste5.end()->GetPrecedent()->GetData() == liste5.back());
+       cout << "On effectue l'inverse en appliquant erase() sur Clist.begin et sur CList.";
        liste5.erase(liste5.begin());
-       liste5.erase(liste5.end());
-       IZI_ASSERT(tabRes[18] = !(liste5.begin()->GetData() == liste5.front() && liste5.end()->GetData() == liste5.back()))
+       liste5.erase(liste5.end()->GetPrecedent());
+       IZI_ASSERT(tabRes[19] = !(liste5.begin()->GetData() == liste5.front() && liste5.end()->GetData() == liste5.back()))
 
        //test slice
        cout << "Maintenant on va echanger le contenu de \033[35mliste1\33[37m et \033[35mliste5\33[37m et le comparer à leur anciennes valeurs"
@@ -251,7 +252,7 @@ namespace
        CList<T> liste1ancien = liste1;
 
        liste1.splice(liste1.end(), liste5);
-       IZI_ASSERT(tabRes[19] = (areListsEquals(liste5,liste1ancien)));
+       IZI_ASSERT(tabRes[20] = (areListsEquals(liste5,liste1ancien)));
 
 
        cout << "FIN DES TESTS DE " << typeElem << endl;

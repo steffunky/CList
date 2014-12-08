@@ -24,9 +24,9 @@ SDDELEM::~CNode  () noexcept
 }
 
 TEMPLINL
-T SDDELEM::GetData () const noexcept
+T& SDDELEM::GetData () const noexcept
 {
-    return m_Data;
+    return (T&)m_Data;
 }
 
 TEMPLINL

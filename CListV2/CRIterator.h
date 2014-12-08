@@ -1,8 +1,6 @@
 #ifndef __CRITERATOR_H__
 #define __CRITERATOR_H__
 
-#include "CIterator.h"
-
 namespace nsSdD
 {
     template <typename T>
@@ -20,11 +18,13 @@ namespace nsSdD
         CRIterator operator-- (int) noexcept;
         Ptr_CNode GetCurrentNode() const noexcept;
         Ptr_CNode operator->() noexcept;
+        const Ptr_CNode operator->() const noexcept;
         Ptr_CNode& operator* () noexcept;
         bool operator==(const CRIterator<T> &It) noexcept;
         CRIterator operator= (const CRIterator<T> &It) noexcept;
         bool operator!= (const CRIterator<T> &It) noexcept;
     };
+#include "CRIterator.hxx"
 }
 
 #endif // CRITERATOR_H

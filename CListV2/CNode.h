@@ -24,7 +24,7 @@ namespace nsSdD
 
         virtual ~CNode () noexcept;
 
-        T GetData () const noexcept;
+        T& GetData () const noexcept;
         Ptr_CNode GetSuivant () const noexcept;
         Ptr_CNode GetPrecedent () const noexcept;
 

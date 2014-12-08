@@ -34,7 +34,7 @@ SDDLIST::CList (unsigned n, const T & val) noexcept
     m_Head->SetSuivant(m_Tail);
     for (unsigned i = 0; i < n; ++i)
     {
-        push_front(val);
+        push_back(val);
     }
 }
 
@@ -45,7 +45,7 @@ SDDLIST::CList (const CList & List) noexcept
     m_Head->SetSuivant(m_Tail);
     for (iterator It (List.begin()); It != List.end(); ++It)
     {
-        push_front(It->GetData());
+        push_back(It->GetData());
     }
 }
 
@@ -58,17 +58,16 @@ SDDLIST::~CList() noexcept
 TEMPLINL
 T& SDDLIST::front() const noexcept
 {
-    iterator It (m_Head);
-    ++It;
-    return *It;
+    iterator It (begin());
+    return It->GetData();
 }
 
 TEMPLINL
 T& SDDLIST::back() const noexcept
 {
-    iterator It (m_Tail);
+    iterator It (end());
     --It;
-    return *It;
+    return It->GetData();
 }
 
 TEMPLINL
@@ -148,7 +147,7 @@ void SDDLIST::clear () noexcept
     iterator Next;
     for (iterator It (begin()); It != end(); It = Next)
     {
-        Next = ++It;
+        Next = It->GetSuivant();
         It->SetSuivant(nullptr);
         It->SetPrecedent(nullptr);
     }
@@ -240,7 +239,6 @@ void SDDLIST::resize (unsigned n, const T& val /* = T() */) noexcept
     unsigned taille = size();
     if(n < size())
     {
-        pop_back();
         for(; n < taille; ++n)
         {
             pop_back();

@@ -47,6 +47,11 @@ typename SDDIT::Ptr_CNode SDDIT::operator-> () noexcept
     return m_CurrentNode;
 }
 
+TEMPLINL
+const typename SDDIT::Ptr_CNode SDDIT::operator-> () const noexcept
+{
+    return m_CurrentNode;
+}
 
 TEMPLINL
 bool SDDIT::operator ==(const CRIterator<T> &It) noexcept
@@ -83,7 +88,7 @@ typename SDDIT SDDIT::operator-- (int) noexcept
 }
 
 TEMPLINL
-bool SDDIT::operator!= (const CIterator<T> &It) noexcept
+bool SDDIT::operator!= (const CRIterator<T> &It) noexcept
 {
     return !(*this == It);
 }
